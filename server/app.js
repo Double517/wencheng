@@ -7,6 +7,7 @@ const koa = require('koa');
 const path = require('path');
 const app = module.exports = koa();
 const router = require('koa-router')();
+const onerror = require('koa-onerror');
 
 const db = require('./database');
 
@@ -16,6 +17,9 @@ const WechatAPI = require('co-wechat-api');
 const wechat_token = 'hehe';
 const wechat_api = new WechatAPI('wx42bdab9ae9ef4ee4', '965fc0fe3f8db1170777d4f4adcef890');
 const wechat_robot = require('./wechat').robot;
+
+// onerror
+onerror(app);
 
 // Logger
 app.use(logger());
