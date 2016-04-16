@@ -52,5 +52,19 @@ module.exports.test = function() {
     });
 };
 
-
-
+/*
+ SELECT TOP 1000 [sxh]
+ ,[userId]
+ ,[RoleID]
+ FROM [D0317].[dbo].[UserRoles]
+* */
+module.exports.thunk = function() {
+    return sql.connect(config).then(function (connection) {
+        return new sql.Request(connection).query('select * from UserRoles');
+    });
+};
+module.exports.thunk2 = function() {
+    return sql.connect(config).then(function () {
+        return new sql.Request().query('select * from UserRoles');
+    });
+};

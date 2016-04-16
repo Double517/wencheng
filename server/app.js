@@ -44,6 +44,11 @@ app.use(function *(next){
     }
 });
 
+router.get('/db', function *() {
+    var a = yield db.thunk();
+    this.body = a;
+});
+
 // Serve static files
 app.use(serve(path.join(__dirname, 'public')));
 
@@ -52,6 +57,7 @@ app.use(serve(path.join(__dirname, 'public')));
 // app.use(compress());
 
 // db.test();
+//db.test2();
 
 if (!module.parent) {
   app.listen(3000);
