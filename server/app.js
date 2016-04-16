@@ -37,7 +37,7 @@ router.get('/promise', messages.promise);
 
 // wechat
 app.use(function *(next){
-    if (this.path.indexOf('wechat/') !== -1) {
+    if (this.path.indexOf('/wechat/') !== -1) {
         yield wechat(wechat_token).middleware(wechat_robot);
     } else {
         yield next;
@@ -51,7 +51,7 @@ app.use(serve(path.join(__dirname, 'public')));
 // compress 以后研究 先去掉
 // app.use(compress());
 
-//db.test();
+// db.test();
 
 if (!module.parent) {
   app.listen(3000);

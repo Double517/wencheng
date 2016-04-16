@@ -4,7 +4,7 @@ var config = {
     user: 'sa',
     password: 'Uiop_098Mn',
     server: '172.16.167.128',
-    database: 'Test',
+    database: 'D0317',
     driver: 'tedious',
     pool: {
         max: 10,
@@ -23,7 +23,7 @@ module.exports.test = function() {
             // ... query error checks
         });
 
-        // // Stored Procedure
+        // Stored Procedure
         // new sql.Request()
         //     .input('input_parameter', sql.Int, value)
         //     .output('output_parameter', sql.VarChar(50))
@@ -32,6 +32,19 @@ module.exports.test = function() {
         // }).catch(function (err) {
         //     // ... execute error checks
         // });
+
+        new sql.Request()
+            .input('userId', 'cy')
+            .execute('Web用户登录判断_获取用户角色').then(function (recordsets) {
+            console.dir(recordsets);
+        }).catch(function (err) {
+            // ... execute error checks
+            console.log(err);
+        });
+        // var request = new sql.Request();
+        // request.verbose = true;
+        // request.input('userId', 'cy'); //这里无需@userId, 无需指定类型, 具体参数可以直接看数据库
+        // request.execute('Web用户登录判断_获取用户角色');//这里无需[]
 
     }).catch(function (err) {
         // ... connect error checks
