@@ -6,6 +6,7 @@ const route = require('koa-route');
 const koa = require('koa');
 const path = require('path');
 const app = module.exports = koa();
+const db = require('./database');
 
 // Logger
 app.use(logger());
@@ -22,6 +23,8 @@ app.use(serve(path.join(__dirname, 'public')));
 
 // Compress
 app.use(compress());
+
+db.test();
 
 if (!module.parent) {
   app.listen(3000);
