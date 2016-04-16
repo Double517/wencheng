@@ -1,30 +1,57 @@
+"use strict"
 const messages = require('./controllers/messages');
 const compress = require('koa-compress');
 const logger = require('koa-logger');
 const serve = require('koa-static');
-const route = require('koa-route');
 const koa = require('koa');
 const path = require('path');
 const app = module.exports = koa();
+const router = require('koa-router')();
+
 const db = require('./database');
+
+const session = require('koa-generic-session');
+const wechat = require('co-wechat');
+const WechatAPI = require('co-wechat-api');
+const wechat_token = 'hehe';
+const wechat_api = new WechatAPI('wx42bdab9ae9ef4ee4', '965fc0fe3f8db1170777d4f4adcef890');
+const wechat_robot = require('./wechat').robot;
 
 // Logger
 app.use(logger());
 
-app.use(route.get('/', messages.home));
-app.use(route.get('/messages', messages.list));
-app.use(route.get('/messages/:id', messages.fetch));
-app.use(route.post('/messages', messages.create));
-app.use(route.get('/async', messages.delay));
-app.use(route.get('/promise', messages.promise));
+// session
+app.use(session());
+
+// router
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+// route
+router.get('/', messages.home);
+router.get('/messages', messages.list);
+router.get('/messages/:id', messages.fetch);
+router.post('/messages', messages.create);
+router.get('/async', messages.delay);
+router.get('/promise', messages.promise);
+
+// wechat
+app.use(function *(next){
+    if (this.path.indexOf('wechat/') !== -1) {
+        yield wechat(wechat_token).middleware(wechat_robot);
+    } else {
+        yield next;
+    }
+});
 
 // Serve static files
 app.use(serve(path.join(__dirname, 'public')));
 
 // Compress
-app.use(compress());
+// compress 以后研究 先去掉
+// app.use(compress());
 
-db.test();
+//db.test();
 
 if (!module.parent) {
   app.listen(3000);
