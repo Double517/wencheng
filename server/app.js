@@ -8,6 +8,7 @@ const path = require('path');
 const app = module.exports = koa();
 const router = require('koa-router')();
 const onerror = require('koa-onerror');
+const json = require('koa-json');
 
 const db = require('./database');
 
@@ -32,6 +33,9 @@ app.use(session({
     store: new SQLite3Store('../db/session.db', {/*default options*/})
 }));
 
+// json pretty
+//app.use(json({ pretty: false, param: 'pretty' })); //for production
+app.use(json());
 
 // router
 app.use(router.routes());

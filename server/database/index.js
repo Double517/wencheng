@@ -3,7 +3,7 @@ var sql = require('mssql');
 var config = {
     user: 'sa',
     password: 'Uiop_098Mn',
-    server: '172.16.167.128',
+    server: '172.16.167.137',
     database: 'D0317',
     driver: 'tedious',
     pool: {
