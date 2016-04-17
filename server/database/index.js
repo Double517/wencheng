@@ -1,10 +1,11 @@
+const keys = require('../config/keys');
 var sql = require('mssql');
 
 var config = {
-    user: 'sa',
-    password: 'Uiop_098Mn',
-    server: '172.16.167.137',
-    database: 'D0317',
+    user: keys.DATABASE_USER,
+    password: keys.DATABASE_PASSWORD,
+    server: keys.DATABASE_SERVER,
+    database: keys.DATABASE_DATABASE,
     driver: 'tedious',
     pool: {
         max: 10,

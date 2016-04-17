@@ -1,5 +1,5 @@
 "use strict"
-const messages = require('./controllers/messages');
+// 3st
 const compress = require('koa-compress');
 const logger = require('koa-logger');
 const serve = require('koa-static');
@@ -9,16 +9,23 @@ const app = module.exports = koa();
 const router = require('koa-router')();
 const onerror = require('koa-onerror');
 const json = require('koa-json');
-
-const db = require('./database');
-
 const session = require('koa-generic-session');
 const SQLite3Store = require('koa-sqlite3-session');
+
+// config
+const keys = require('./config/keys');
+const config = require('./config/config.js');
+
+// 1st
+const messages = require('./controllers/messages');
+const db = require('./database');
+
+// wechat
 const wechat = require('co-wechat');
 const WechatAPI = require('co-wechat-api');
-const wechat_token = 'hehe';
-const wechat_api = new WechatAPI('wx42bdab9ae9ef4ee4', '965fc0fe3f8db1170777d4f4adcef890');
+const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
 const wechat_robot = require('./wechat').robot;
+
 
 // onerror
 onerror(app);
@@ -28,18 +35,33 @@ app.use(logger());
 
 // session
 // app.use(session());
-app.keys = ['secret1____hehe', 'secret2____hehe'];
+app.keys = keys.SECRET_KEYS;
 app.use(session({
     store: new SQLite3Store('../db/session.db', {/*default options*/})
 }));
 
 // json pretty
-//app.use(json({ pretty: false, param: 'pretty' })); //for production
-app.use(json());
+if (config.NODE_ENV === 'development') {
+    app.use(json());
+} else {
+    app.use(json({ pretty: false, param: 'pretty' })); //for production
+}
 
 // router
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// Serve static files
+app.use(serve(path.join(__dirname, 'public')));
+
+// wechat
+app.use(function *(next){
+    if (this.path.indexOf('/wechat/') !== -1) {
+        yield wechat(keys.WECHAT_TOKEN).middleware(wechat_robot);
+    } else {
+        yield next;
+    }
+});
 
 // route
 router.get('/', messages.home);
@@ -49,22 +71,10 @@ router.post('/messages', messages.create);
 router.get('/async', messages.delay);
 router.get('/promise', messages.promise);
 
-// wechat
-app.use(function *(next){
-    if (this.path.indexOf('/wechat/') !== -1) {
-        yield wechat(wechat_token).middleware(wechat_robot);
-    } else {
-        yield next;
-    }
-});
-
 router.get('/db', function *() {
     var a = yield db.thunk();
     this.body = a;
 });
-
-// Serve static files
-app.use(serve(path.join(__dirname, 'public')));
 
 // Compress
 // compress 以后研究 先去掉

@@ -36,3 +36,4 @@ jspm_packages
 #
 logs
 db
+server/config/keys.js
