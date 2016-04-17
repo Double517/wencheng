@@ -11,6 +11,7 @@ const onerror = require('koa-onerror');
 const json = require('koa-json');
 const session = require('koa-generic-session');
 const SQLite3Store = require('koa-sqlite3-session');
+const bodyParser = require('koa-bodyparser');
 
 // config
 const keys = require('./config/keys');
@@ -32,6 +33,10 @@ onerror(app);
 
 // Logger
 app.use(logger());
+
+// koa-bodyparser: post body parser, for application/json and application/x-www-form-urlencoded.
+// the parsed body will store in this.request.body
+app.use(bodyParser());
 
 // session
 // app.use(session());
