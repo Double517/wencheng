@@ -27,6 +27,7 @@ app.use(logger());
 
 // session
 // app.use(session());
+app.keys = ['secret1____hehe', 'secret2____hehe'];
 app.use(session({
     store: new SQLite3Store('session_db_file/session.db', {/*default options*/})
 }));
