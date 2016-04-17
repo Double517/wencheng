@@ -12,6 +12,7 @@ const onerror = require('koa-onerror');
 const db = require('./database');
 
 const session = require('koa-generic-session');
+const SQLite3Store = require('koa-sqlite3-session');
 const wechat = require('co-wechat');
 const WechatAPI = require('co-wechat-api');
 const wechat_token = 'hehe';
@@ -25,7 +26,11 @@ onerror(app);
 app.use(logger());
 
 // session
-app.use(session());
+// app.use(session());
+app.use(session({
+    store: new SQLite3Store('session_db_file/session.db', {/*default options*/})
+}));
+
 
 // router
 app.use(router.routes());
