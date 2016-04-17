@@ -34,4 +34,5 @@ jspm_packages
 .node_repl_history
 
 #
-server/session_db_file
+logs
+db
