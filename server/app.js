@@ -80,6 +80,18 @@ router.get('/db', function *() {
 // compress 以后研究 先去掉
 // app.use(compress());
 
+
+// error handler
+app.on('error', function(err, ctx){
+    console.log('111');
+    if (config.NODE_ENV !== 'test') {
+        // TODO: log to file
+        console.log('sent error %s to the cloud', err.message);
+        console.log(err);
+        console.log(ctx);
+    }
+});
+
 // db.test();
 //db.test2();
 
