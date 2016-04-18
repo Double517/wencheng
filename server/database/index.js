@@ -14,6 +14,27 @@ var config = {
     }
 };
 
+module.exports.query = function *(sqlString) {
+    var connection = yield sql.connect(config);
+    var recordsets = yield new sql.Request(connection).query(sqlString);
+    return recordsets;
+};
+
+module.exports.queryWithRequst = function *(request) {
+    var connection = yield sql.connect(config);
+    var recordsets = yield request;
+    return recordsets;
+};
+
+
+/*************** test code ********************/
+
+module.exports.promiseQuery = function() {
+    return sql.connect(config).then(function () {
+        return new sql.Request().query('select * from UserRoles');
+    });
+};
+
 module.exports.test = function() {
     sql.connect(config).then(function () {
 
@@ -50,22 +71,5 @@ module.exports.test = function() {
     }).catch(function (err) {
         // ... connect error checks
         console.log(err);
-    });
-};
-
-/*
- SELECT TOP 1000 [sxh]
- ,[userId]
- ,[RoleID]
- FROM [D0317].[dbo].[UserRoles]
-* */
-module.exports.thunk = function() {
-    return sql.connect(config).then(function (connection) {
-        return new sql.Request(connection).query('select * from UserRoles');
-    });
-};
-module.exports.thunk2 = function() {
-    return sql.connect(config).then(function () {
-        return new sql.Request().query('select * from UserRoles');
     });
 };

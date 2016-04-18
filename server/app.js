@@ -77,7 +77,7 @@ router.get('/async', messages.delay);
 router.get('/promise', messages.promise);
 
 router.get('/db', function *() {
-    var a = yield db.thunk();
+    var a = yield db.query('select * from UserRoles');
     this.body = a;
 });
 
@@ -96,9 +96,6 @@ app.on('error', function(err, ctx){
         console.log(ctx);
     }
 });
-
-// db.test();
-//db.test2();
 
 if (!module.parent) {
   app.listen(3000);
