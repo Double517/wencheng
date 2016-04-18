@@ -29,7 +29,11 @@ function* query(sqlString, params) {
                     if (i < 0 || i >= params.length) {
                         throw Error('index ' + i + ' beyond index, params: ' + params);
                     }
-                    return '\'' + params[i] + '\'';
+                    const param = params[i];
+                    if (/(--| |\/\*|\*\/|')/.test(param)) {
+                        throw new RequestError("SQL injection warning for param '" + param + "'", 'EINJECT');
+                    }
+                    return '\'' + param + '\'';
                 }
             );
             // console.log(sqlString);
