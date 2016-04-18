@@ -21,4 +21,17 @@ describe('Database', () => {
             a.should.be.a('Array');
         });
     });
+    describe('Sql with params', () => {
+        it('should return users', function *() {
+            var a = yield db.query('select * from UserRoles where userId=$1', ['cy']);
+            a.should.be.a('Array');
+        });
+    });
+    describe('Sql queryOne', () => {
+        it('should return users', function *() {
+            var a = yield db.queryOne('select * from UserRoles where userId=$1', ['cy']);
+            a.should.have.property('sxh', 99);
+            a.should.have.property('userId', 'cy');
+        });
+    });
 });

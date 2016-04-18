@@ -1,5 +1,8 @@
+"use strict"
+
 const keys = require('../config/keys');
-var sql = require('mssql');
+const sql = require('mssql');
+const assert = require('chai').assert;
 
 var config = {
     user: keys.DATABASE_USER,
@@ -14,10 +17,58 @@ var config = {
     }
 };
 
-module.exports.query = function *(sqlString) {
-    var connection = yield sql.connect(config);
-    var recordsets = yield new sql.Request(connection).query(sqlString);
+module.exports.query = query;
+function* query(sqlString, params) {
+    let recordsets;
+    try {
+        if (params) {
+            // eg. VALUES ($1, $2, $3), params = ['a', 'b', 'c']
+            sqlString = sqlString.replace(/\$(\d+)/g, function(match, contents, offset, s)
+                {
+                    const i = +contents-1;
+                    if (i < 0 || i >= params.length) {
+                        throw Error('index ' + i + ' beyond index, params: ' + params);
+                    }
+                    return '\'' + params[i] + '\'';
+                }
+            );
+            // console.log(sqlString);
+        }
+
+        const connection = yield sql.connect(config);
+        recordsets = yield new sql.Request(connection).query(sqlString);
+    } catch (err) {
+        throw err;
+    }
+
     return recordsets;
+}
+
+/*
+exports.insertMessage = function*(data) {
+    assert(_.isInteger(data.user_id) || _.isUndefined(data.user_id));
+    assert(_.isString(data.markup));
+    assert(_.isString(data.ip_address));
+    assert(_.isString(data.user_agent) || _.isUndefined(data.user_agent));
+
+    const sql = `
+    INSERT INTO messages (user_id, markup, ip_address, user_agent)
+    VALUES ($1, $2, $3::inet, $4)
+    RETURNING *
+  `;
+
+    return yield dbUtil.queryOne(sql, [
+        data.user_id, data.markup, data.ip_address, data.user_agent
+    ]);
+};*/
+module.exports.queryOne = function *(sqlString, params) {
+    const records = yield query(sqlString, params);
+    assert(records.length <= 1);
+    if (records.length == 0) {
+        return null;
+    } else {
+        return records[0];
+    }
 };
 
 module.exports.queryWithRequst = function *(request) {
