@@ -48,24 +48,24 @@ module.exports.robot = function *() {
      回复图片 this.body = { type: "image", content: { mediaId: 'mediaId' }
      */
 
+    const request = yield db.request();
+    request.input('openid', info.FromUserName);
+    const r = yield request.queryOne('select userid from wechat_bind where openid=@openid');
+    if (!r) {
+        this.body = yield handleSubscribeEvent(info);
+        return;
+    }
+    this.userid = r.userid;
+    console.log('from userid: ' + r.userid);
+
     switch(info.MsgType) {
         case 'text':
-            const request = yield db.request();
-            request.input('openid', info.FromUserName);
-            const r = yield request.queryOne('select userid from wechat_bind where openid=@openid');
-            if (!r) {
-                this.body = yield handleSubscribeEvent(info);
-                return;
-            }
-            this.userid = r.userid;
-            console.log('from userid: ' + r.userid);
-
             this.body = yield handleMessage(info, this.userid);
             break;
         case 'event':
             switch(info.Event) {
                 case 'subscribe':
-                    this.body = yield handleSubscribeEvent(info);
+                    this.body = yield handleSubscribeEvent(info, this.userid);
                     break;
                 default:
                     this.body = 'not support';
@@ -90,9 +90,13 @@ function *handleMessage(message, userid) {
     //     this.wxsession.text.push(info.Content);
     //     return '收到' + info.Content;
     // }
-    return 'receive ' + message.Content + 'from userid ' + userid;
+    return 'receive ' + message.Content + ' from userid ' + userid;
 }
 
-function *handleSubscribeEvent(message) {
-    return messages.bind();
+function *handleSubscribeEvent(message, userid) {
+    if (!userid) {
+        return messages.bind();
+    } else {
+        return messages.refollow();
+    }
 }

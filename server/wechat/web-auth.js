@@ -9,6 +9,8 @@ const _ = require('lodash');
 const request = require('./request');
 const assert = require('chai').assert;
 
+const openid_cache = {};
+
 module.exports = function *(next){
     // const code = this.query.code;
     // if (!_.isString(code)) {
@@ -19,22 +21,32 @@ module.exports = function *(next){
         return yield *next;
     }
 
-    const url = sprintf('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code',
-                keys.WECHAT_APPID, keys.WECHAT_APPSECRET, code);
+    var openid = openid_cache.code;
+    if (openid) {
+        console.log('hit! code ' + code + ' openid ' + openid);
+    } else {
+        console.log('not hit! code ' + code);
 
-    let body;
-    try {
-        body = yield request(url);
-    } catch(err) {
-        console.log(err);
-        throw err;
+        const url = sprintf('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code',
+            keys.WECHAT_APPID, keys.WECHAT_APPSECRET, code);
+
+        let body;
+        try {
+            body = yield request(url);
+        } catch(err) {
+            console.log(err);
+            throw err;
+        }
+
+        console.log(body);
+        openid = body.openid;
+        assert(_.isObject(body) && _.isString(body.openid));
+
+        // cache
+        openid_cache.code = openid;
     }
 
-    console.log(body);
-    this.openid = body.openid;
-
-    assert(_.isObject(body) && _.isString(body.openid));
-
-    console.log('wechat web auth code '+ code + ' -> openid ' + this.openid);
+    this.openid = openid;
+    console.log('wechat web auth code '+ code + ' -> this.openid ' + this.openid);
     yield *next;
 };

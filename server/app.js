@@ -161,9 +161,10 @@ app.use(router.allowedMethods());
 app.on('error', function(err, ctx){
     if (config.NODE_ENV !== 'test') {
         // TODO: log to file
-        console.log('sent error %s to the cloud', err.message);
+        console.log('#### error #### \n%s', err.message);
         console.log(err);
         console.log(ctx);
+        console.log('#### end ####');
     }
 });
 

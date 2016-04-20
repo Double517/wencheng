@@ -11,3 +11,7 @@ module.exports.bind = function() {
     const reply = sprintf('<a href="%s">【点击这里绑定学号】</a>\n\n绑定后即可查询', url);
     return reply;
 };
+
+module.exports.refollow = function() {
+    return 'welcome refollow';
+};
