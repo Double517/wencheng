@@ -17,6 +17,19 @@ var config = {
     }
 };
 
+sql.Request.prototype.queryOne = function(command, callback) {
+    return new Promise((function(_this) {
+        return function(resolve, reject) {
+            return _this.query(command, function(err, records) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(records.length >= 1 ? records[0] : null);
+            });
+        };
+    })(this));
+};
+
 module.exports.request = getRequest;
 function* getRequest() {
     try {

@@ -72,6 +72,12 @@ describe('Database', () => {
         it('should be ok', function *() {
             const request = yield db.request();
             request.input('openid', openid);
+            var result = yield request.queryOne('select userid from wechat_bind where openid=@openid');
+            assert(result.userid === 'test_userid');
+        });
+        it('should be ok', function *() {
+            const request = yield db.request();
+            request.input('openid', openid);
             var result = yield request.query('delete from wechat_bind where openid=@openid');
             assert(result === undefined);
         });
