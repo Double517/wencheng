@@ -4,6 +4,7 @@ const chai = require('chai')
     , expect = chai.expect
     , should = chai.should()
     , assert = chai.assert;
+const constants = require('../constants');
 
 describe('Database', () => {
     describe('Sql', () => {
@@ -14,10 +15,9 @@ describe('Database', () => {
     });
     describe('Stored Procedure', () => {
         it('should return user', function *() {
-            var request = new sql.Request()
-                .input('userId', 'cy')
-                .execute('Web用户登录判断_获取用户角色');
-            var a = yield db.queryWithRequst(request);
+            const request = yield db.request();
+            request.input('userId', 'cy');
+            var a = yield request.execute('Web用户登录判断_获取用户角色');
             // console.log(a);
             a.should.be.a('Array');
         });
@@ -43,17 +43,44 @@ describe('Database', () => {
         // -1 error
         function login(userid, password, returnValue) {
             return function *() {
-                var request = new sql.Request()
-                    .input('userId', userid)
-                    .input('pwd', password)
-                    .execute('Web用户登录判断');
-                var a = yield db.queryWithRequst(request);
+                const request = yield db.request();
+                request.input('userId', userid);
+                request.input('pwd', password);
+                var a = yield request.execute('Web用户登录判断');
                 assert(a.returnValue == returnValue);
             }
         }
-        it('should return 0', login('cy', '12345', 0));
-        it('should return 1', login('1417249001', '12345', 1));
-        it('should return 2', login('cxu', '12345', 2));
+        it('should return 0', login('cy', '12345', constants.USER_TYPE_HEAD_TEACHER));
+        it('should return 1', login('1417249001', '12345', constants.USER_TYPE_STUDENT));
+        it('should return 2', login('cxu', '12345', constants.USER_TYPE_TEACHER));
         it('should return -1', login('1417249001', 'xxxxxxxxxx', -1));
+    });
+    describe('insert into wechat_bind', () => {
+
+        const openid = 'test_openid_6';
+        const userid = 'test_userid';
+        const usertype = 1;
+
+        it('should be ok', function *() {
+            const request = yield db.request();
+            request.input('openid', openid);
+            request.input('userid', userid);
+            request.input('usertype', usertype);
+            var result = yield request.query('insert into wechat_bind values (@openid,@userid,@usertype)');
+            assert(result === undefined);
+        });
+        it('should be ok', function *() {
+            const request = yield db.request();
+            request.input('openid', openid);
+            var result = yield request.query('delete from wechat_bind where openid=@openid');
+            assert(result === undefined);
+        });
+    });
+    describe('delete all wechat_bind', () => {
+        // it('should be ok', function *() {
+        //     const request = yield db.request();
+        //     var result = yield request.query('delete from wechat_bind');
+        //     assert(result === undefined);
+        // });
     });
 });

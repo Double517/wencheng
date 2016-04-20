@@ -17,6 +17,16 @@ var config = {
     }
 };
 
+module.exports.request = getRequest;
+function* getRequest() {
+    try {
+        var connection = yield sql.connect(config);
+        return new sql.Request(connection);
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports.query = query;
 function* query(sqlString, params) {
     let recordsets;
@@ -39,8 +49,8 @@ function* query(sqlString, params) {
             // console.log(sqlString);
         }
 
-        const connection = yield sql.connect(config);
-        recordsets = yield new sql.Request(connection).query(sqlString);
+        const request = yield getRequest();
+        recordsets = yield request.query(sqlString);
     } catch (err) {
         throw err;
     }
@@ -48,23 +58,6 @@ function* query(sqlString, params) {
     return recordsets;
 }
 
-/*
-exports.insertMessage = function*(data) {
-    assert(_.isInteger(data.user_id) || _.isUndefined(data.user_id));
-    assert(_.isString(data.markup));
-    assert(_.isString(data.ip_address));
-    assert(_.isString(data.user_agent) || _.isUndefined(data.user_agent));
-
-    const sql = `
-    INSERT INTO messages (user_id, markup, ip_address, user_agent)
-    VALUES ($1, $2, $3::inet, $4)
-    RETURNING *
-  `;
-
-    return yield dbUtil.queryOne(sql, [
-        data.user_id, data.markup, data.ip_address, data.user_agent
-    ]);
-};*/
 module.exports.queryOne = function *(sqlString, params) {
     const records = yield query(sqlString, params);
     assert(records.length <= 1);
@@ -74,26 +67,6 @@ module.exports.queryOne = function *(sqlString, params) {
         return records[0];
     }
 };
-
-module.exports.queryWithRequst = queryWithRequst;
-function *queryWithRequst(request) {
-    var connection = yield sql.connect(config);
-    var recordsets = yield request;
-    // console.log(recordsets);
-    return recordsets;
-};
-//
-// module.exports.queryOneWithRequst = function *(request) {
-//     const records = yield queryWithRequst(request);
-//     assert(records.length <= 1);
-//     console.log(records.returnValue);
-//     if (records.length == 0) {
-//         return null;
-//     } else {
-//         return records[0];
-//     }
-// };
-
 
 /*************** test code ********************/
 
