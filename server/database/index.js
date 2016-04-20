@@ -75,11 +75,24 @@ module.exports.queryOne = function *(sqlString, params) {
     }
 };
 
-module.exports.queryWithRequst = function *(request) {
+module.exports.queryWithRequst = queryWithRequst;
+function *queryWithRequst(request) {
     var connection = yield sql.connect(config);
     var recordsets = yield request;
+    // console.log(recordsets);
     return recordsets;
 };
+//
+// module.exports.queryOneWithRequst = function *(request) {
+//     const records = yield queryWithRequst(request);
+//     assert(records.length <= 1);
+//     console.log(records.returnValue);
+//     if (records.length == 0) {
+//         return null;
+//     } else {
+//         return records[0];
+//     }
+// };
 
 
 /*************** test code ********************/
