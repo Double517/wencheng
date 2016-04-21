@@ -4,9 +4,10 @@ const keys = require('../config/keys');
 const sprintf = require("sprintf-js").sprintf;
 const messages = require('./messages');
 const db = require('../database');
-
+const enentKeys = require('./menu_config').keys;
 const WechatAPI = require('co-wechat-api');
 const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
+const assert = require('chai').assert;
 
 module.exports.wechat_api = wechat_api;
 
@@ -72,6 +73,9 @@ module.exports.robot = function *() {
                 case 'subscribe':
                     this.body = yield handleSubscribeEvent(info, this.userid);
                     break;
+                case 'CLICK':
+                    this.body = yield handleClickEvent(info, this.userid);
+                    break;
                 default:
                     this.body = 'not support';
                     break;
@@ -109,6 +113,28 @@ function *handleSubscribeEvent(message, userid) {
     } else {
         // TODO: regroup
         return messages.refollow();
+    }
+}
+
+function *handleClickEvent(message, userid) {
+    const eventKey = message.EventKey;
+    switch (eventKey) {
+        case enentKeys.i_am_head_teacher:
+            return 'i_am_head_teacher';
+            break;
+        case enentKeys.i_am_student:
+            return 'i_am_student';
+            break;
+        case enentKeys.today_class_schedule:
+            return 'today_class_schedule';
+            break;
+        case enentKeys.unbind:
+            return 'unbind';
+            break;
+        default:
+            console.log(eventKey);
+            assert(false);
+            break;
     }
 }
 
