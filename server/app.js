@@ -22,6 +22,8 @@ const config = require('./config/config.js');
 const constants = require('./constants');
 const messages = require('./controllers/messages');
 const db = require('./database');
+const apiError = require('./api/error');
+const api = require('./api');
 
 // wechat
 const wechat = require('co-wechat');
@@ -104,7 +106,14 @@ router.post('/api/bind', function *() {
     const password = this.request.body.password;
     const openid = this.openid;
 
-    assert(userid && password && openid);
+    if (!userid || !password) {
+        this.body = api.return(apiError.parameter_invalid);
+        return;
+    }
+    if (!openid) {
+        this.body = api.return(apiError.server_error);
+        return;
+    }
 
     //1 账号密码 校验
     //2 服务端获取openid
@@ -126,12 +135,8 @@ router.post('/api/bind', function *() {
         request1.input('openid', openid);
         const r1 = yield request1.queryOne('select userid from wechat_bind where openid=@openid');
         if (r1) {
-            this.body = {code: -1, msg: JSON.stringify(r1)};
+            this.body = api.return(apiError.error(-1, '已绑定' + JSON.stringify(r1)));
             return;
-        }
-
-        if (r1 !== null) {
-            this.body = {code:-1, msg:'exist account'};
         }
 
         const request2 = yield db.request();
@@ -142,9 +147,9 @@ router.post('/api/bind', function *() {
 
         assert(r2 === undefined);
 
-        this.body = {code:0, msg:'success'};
+        this.body = api.success();
     } else {
-        this.body = {code:-1, msg:'password error'};
+        this.body = api.return(apiError.password_error);
     }
 });
 

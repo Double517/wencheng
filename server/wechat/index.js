@@ -90,6 +90,11 @@ function *handleMessage(message, userid) {
     //     this.wxsession.text.push(info.Content);
     //     return '收到' + info.Content;
     // }
+
+    if (message.Content.indexOf('unbind') !== -1) {
+        return yield handleUnbindMessage(message, userid);
+    }
+
     return 'receive ' + message.Content + ' from userid ' + userid;
 }
 
@@ -98,5 +103,19 @@ function *handleSubscribeEvent(message, userid) {
         return messages.bind();
     } else {
         return messages.refollow();
+    }
+}
+
+function *handleUnbindMessage(message, userid) {
+    const openid = message.FromUserName;
+
+    const request = yield db.request();
+    request.input('openid', openid);
+    var result = yield request.query('delete from wechat_bind where openid=@openid');
+
+    if (result === undefined) {
+        return 'unbind success';
+    } else {
+        return 'unbind error';
     }
 }
