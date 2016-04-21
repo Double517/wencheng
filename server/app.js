@@ -161,8 +161,9 @@ app.use(router.allowedMethods());
 app.on('error', function(err, ctx){
     if (config.NODE_ENV !== 'test') {
         // TODO: log to file
-        console.log('#### error #### \n%s', err.message);
-        console.log(err);
+        console.log('#### error ####');
+        console.log({message: err.message, code: err.code});
+        console.log(err.stack);
         console.log(ctx);
         console.log('#### end ####');
     }
