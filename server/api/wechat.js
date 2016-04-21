@@ -69,6 +69,9 @@ module.exports.bind = function *() {
         const move_result = yield wechat_api.moveUserToGroup(openid, groupId);
         assert(move_result.errcode == 0);
 
+        // const ensure_resule = yield wechat_api.getWhichGroup(openid);
+        // console.log(ensure_resule);
+
         this.body = api.success();
     } else {
         this.body = api.return(apiError.password_error);

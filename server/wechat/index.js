@@ -107,6 +107,7 @@ function *handleSubscribeEvent(message, userid) {
     if (!userid) {
         return messages.bind();
     } else {
+        // TODO: regroup
         return messages.refollow();
     }
 }
