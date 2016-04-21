@@ -5,6 +5,11 @@ const sprintf = require("sprintf-js").sprintf;
 const messages = require('./messages');
 const db = require('../database');
 
+const WechatAPI = require('co-wechat-api');
+const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
+
+module.exports.wechat_api = wechat_api;
+
 module.exports.robot = function *() {
     var info = this.weixin;
 

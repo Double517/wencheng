@@ -3,6 +3,7 @@ const db = require('../database');
 const apiError = require('../api/error');
 const api = require('../api');
 const assert = require('chai').assert;
+const wechat_api = require('../wechat').wechat_api;
 
 module.exports.bind = function *() {
     const userid = this.request.body.username;
@@ -49,6 +50,24 @@ module.exports.bind = function *() {
         const r2 = yield request2.query('insert into wechat_bind values (@openid,@userid,@usertype)');
 
         assert(r2 === undefined);
+
+        var groupId = 0;
+        switch (userType) {
+            case constants.USER_TYPE_STUDENT:
+                groupId = constants.USER_TYPE_STUDENT_GROUP_ID;
+                break;
+            case constants.USER_TYPE_TEACHER:
+                groupId = constants.USER_TYPE_HEAD_TEACHER_GROUP_ID;
+                break;
+            case constants.USER_TYPE_HEAD_TEACHER:
+                groupId = constants.USER_TYPE_HEAD_TEACHER_GROUP_ID;
+                break;
+            default:
+                assert(false);
+                break;
+        }
+        const move_result = yield wechat_api.moveUserToGroup(openid, groupId);
+        assert(move_result.errcode == 0);
 
         this.body = api.success();
     } else {
