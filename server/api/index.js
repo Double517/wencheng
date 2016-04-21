@@ -12,4 +12,10 @@ module.exports.success = function () {
     return {code:0};
 };
 
+module.exports.example = require('./messages');
 module.exports.wechat = require('./wechat');
+module.exports.student = require('./student');
+module.exports.teacher = require('./teacher');
+
+// 临时page
+module.exports.page = require('./page');

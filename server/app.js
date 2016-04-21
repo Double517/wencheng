@@ -20,15 +20,12 @@ const config = require('./config/config.js');
 
 // 1st
 const constants = require('./constants');
-const messages = require('./controllers/messages');
 const db = require('./database');
 const apiError = require('./api/error');
 const api = require('./api');
 
 // wechat
 const wechat = require('co-wechat');
-const WechatAPI = require('co-wechat-api');
-const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
 const wechat_robot = require('./wechat').robot;
 const wechat_web_auth = require('./wechat/web-auth');
 
@@ -65,93 +62,39 @@ app.use(function *(next) {
     if (this.path.indexOf('/wechat/') !== -1) {
         yield wechat(keys.WECHAT_TOKEN).middleware(wechat_robot);
     } else {
-        yield next;
+        yield *next;
     }
 });
 
 app.use(wechat_web_auth);
 
-// route
-router.get('/', messages.home);
-router.get('/messages', messages.list);
-router.get('/messages/:id', messages.fetch);
-router.post('/messages', messages.create);
-router.get('/async', messages.delay);
-router.get('/promise', messages.promise);
-
-const render = require(('co-views'))(__dirname + '/views', {
-    map: { html: 'swig' }
-});
-
-router.get('/bind', function *() {
-    // this.body = this;
-    // console.log(this.openid);
-    const param = {
-        debug: true,
-        jsApiList: ['closeWindow'],
-        url: this.request.href
-    };
-    const jsconfig = yield wechat_api.getJsConfig(param);
-    console.log(jsconfig);
-    this.body = yield render('bind', {jsconfig: JSON.stringify(jsconfig)});
-});
-
+// routers
+// example
+//
+router.get('/', api.example.home);
+router.get('/messages', api.example.list);
+router.get('/messages/:id', api.example.fetch);
+router.post('/messages', api.example.create);
+router.get('/async', api.example.delay);
+router.get('/promise', api.example.promise);
 router.get('/db', function *() {
     var a = yield db.query('select * from UserRoles');
     this.body = a;
 });
 
-router.post('/api/bind', function *() {
-    const userid = this.request.body.username;
-    const password = this.request.body.password;
-    const openid = this.openid;
+// wechat
+//
+router.post('/api/bind', api.wechat.bind);
 
-    if (!userid || !password) {
-        this.body = api.return(apiError.parameter_invalid);
-        return;
-    }
-    if (!openid) {
-        this.body = api.return(apiError.server_error);
-        return;
-    }
+// teacher
+//
 
-    //1 账号密码 校验
-    //2 服务端获取openid
-    //3 是否已绑过
-    //4 存进去数据库
-    //5 返回成功
+// student
+//
 
-    const request = yield db.request();
-    request.input('userId', userid);
-    request.input('pwd', password);
-    const r = yield request.execute('Web用户登录判断');
-
-    const userType = r.returnValue;
-    if (userType === constants.USER_TYPE_STUDENT ||
-        userType === constants.USER_TYPE_TEACHER ||
-        userType === constants.USER_TYPE_HEAD_TEACHER) {
-
-        const request1 = yield db.request();
-        request1.input('openid', openid);
-        const r1 = yield request1.queryOne('select userid from wechat_bind where openid=@openid');
-        if (r1) {
-            this.body = api.return(apiError.error(-1, '已绑定' + JSON.stringify(r1)));
-            return;
-        }
-
-        const request2 = yield db.request();
-        request2.input('openid', openid);
-        request2.input('userid', userid);
-        request2.input('usertype', userType);
-        const r2 = yield request2.query('insert into wechat_bind values (@openid,@userid,@usertype)');
-
-        assert(r2 === undefined);
-
-        this.body = api.success();
-    } else {
-        this.body = api.return(apiError.password_error);
-    }
-});
+// 临时的页面
+//
+router.get('/bind', api.page.bind);
 
 // router
 app.use(router.routes());
@@ -160,7 +103,6 @@ app.use(router.allowedMethods());
 // Compress
 // compress 以后研究 先去掉
 // app.use(compress());
-
 
 // error handler
 app.on('error', function(err, ctx){
