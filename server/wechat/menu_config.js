@@ -7,6 +7,7 @@ const keys = module.exports.keys = {
     unbind: 'unbind'
 };
 
+/*
 module.exports.default_menu = {
     "button":[
         {
@@ -21,11 +22,13 @@ module.exports.default_menu = {
         }
     ]
 };
+*/
 /*
  课表  (一键查今日课表)
  成绩查询 {4学期成绩 5四六级成绩}
  更多 {6考试安排 1奖惩信息 2行为学分 7解绑}
  */
+module.exports.default_menu = 
 module.exports.student_menu = {
     "button":[
         {
