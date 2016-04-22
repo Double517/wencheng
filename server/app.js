@@ -121,6 +121,10 @@ router.post('/api/bind', api.wechat.bind);
 
 // student
 //
+router.get('/student/class_schedule', function *(next) {
+    const schedule = yield api.student.get_this_week_class_schedule(this.userid);
+    this.body = api.return(schedule);
+});
 
 // 临时的页面
 //

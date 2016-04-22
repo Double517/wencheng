@@ -9,6 +9,10 @@ const WechatAPI = require('co-wechat-api');
 const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
 const assert = require('chai').assert;
 
+const student_api = require('../api/student');
+const teacher_api = require('../api/student');
+
+
 module.exports.wechat_api = wechat_api;
 
 module.exports.robot = function *() {
@@ -126,7 +130,8 @@ function *handleClickEvent(message, userid) {
             return 'i_am_student';
             break;
         case enentKeys.today_class_schedule:
-            return 'today_class_schedule';
+            const schedule = yield *student_api.get_today_class_schedule(userid);
+            return messages.today_class_schedule(schedule);
             break;
         case enentKeys.unbind:
             return 'unbind';

@@ -19,6 +19,7 @@ describe('Database', () => {
             request.input('userId', 'cy');
             var a = yield request.execute('Web用户登录判断_获取用户角色');
             // console.log(a);
+            //返回 [[{}, {}, ..], returnValue]
             a.should.be.a('Array');
         });
     });
@@ -82,11 +83,11 @@ describe('Database', () => {
             assert(result === undefined);
         });
     });
-    describe('delete all wechat_bind', () => {
-        // it('should be ok', function *() {
-        //     const request = yield db.request();
-        //     var result = yield request.query('delete from wechat_bind');
-        //     assert(result === undefined);
-        // });
-    });
+    // describe('delete all wechat_bind', () => {
+    //     it('should be ok', function *() {
+    //         const request = yield db.request();
+    //         var result = yield request.query('delete from wechat_bind');
+    //         assert(result === undefined);
+    //     });
+    // });
 });
