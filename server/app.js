@@ -75,7 +75,28 @@ app.use(function *(next) {
     }
 });
 
+// 注入openid 和 userid
 app.use(wechat_web_auth);
+
+app.use(function *(next) {
+    // TODO: for test
+    if (this.query.userid) {
+        this.userid = this.query.userid;
+    }
+
+    // 临时放在这, 之后把绑定, 登录的放在router之前
+    if (this.path === '/bind' ||
+        this.path === '/api/bind') {
+        return yield *next;
+    }
+
+    if (!this.userid) {
+        this.body = api.return(apiError.unauthorized);
+        return;
+    }
+
+    return yield *next;
+});
 
 // routers
 // example

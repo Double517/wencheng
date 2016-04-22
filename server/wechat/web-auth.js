@@ -6,17 +6,14 @@
 const sprintf = require("sprintf-js").sprintf;
 const keys = require('../config/keys');
 const _ = require('lodash');
-const request = require('./request');
+const http_request = require('./request');
 const assert = require('chai').assert;
+const db = require('../database');
 
 const openid_cache = {};
 
 module.exports = function *(next){
-    // const code = this.query.code;
-    // if (!_.isString(code)) {
-    //     return yield *next;
-    // }
-    const code = this.request.body.code;
+    const code = this.query.code || this.request.body.code;
     if (!_.isString(code)) {
         return yield *next;
     }
@@ -32,7 +29,7 @@ module.exports = function *(next){
 
         let body;
         try {
-            body = yield request(url);
+            body = yield http_request(url);
         } catch(err) {
             console.log(err);
             throw err;
@@ -47,6 +44,15 @@ module.exports = function *(next){
     }
 
     this.openid = openid;
-    console.log('wechat web auth code '+ code + ' -> this.openid ' + this.openid);
+
+
+    // openid 换 userid
+    const request = yield db.request();
+    request.input('openid', this.openid);
+    const result = yield request.queryOne('select userid from wechat_bind where openid=@openid');
+    this.userid = result.userid;
+
+
+    console.log('wechat web auth code '+ code + ' -> this.openid ' + this.openid + ' -> userid ' + this.userid);
     yield *next;
 };
