@@ -30,6 +30,15 @@ const wechat_robot = require('./wechat').robot;
 const wechat_web_auth = require('./wechat/web-auth');
 
 
+require('debug-trace')({
+    always: true,
+    dateFormat: 'YY/MM/DD HH:mm:ss',
+});
+console.format = function(c) {
+    return c.date + " [" + c.filename + ":" + c.getLineNumber() + "][" + c.functionName + "]";
+};
+
+
 // onerror
 onerror(app);
 

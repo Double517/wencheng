@@ -11,6 +11,7 @@
     "co-views": "^2.1.0",
     "co-wechat": "0.0.4",
     "co-wechat-api": "^2.3.2",
+    "debug-trace": "^0.2.4",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.0.1",
     "koa-compress": "^1.0.6",
