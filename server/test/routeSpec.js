@@ -20,11 +20,11 @@ describe('Routes', () => {
         .expect(200, done);
     });
   });
-  describe('GET /messages/notfound', () => {
-    it('should return 404', done => {
-      request
-        .get('/messages/notfound')
-        .expect(404, done);
-    });
-  });
+  // describe('GET /messages/notfound', () => {
+  //   it('should return 404', done => {
+  //     request
+  //       .get('/messages/notfound')
+  //       .expect(404, done);
+  //   });
+  // });
 });
