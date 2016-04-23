@@ -134,7 +134,8 @@ router.get('/student/score/cet', function *(next) {
     this.body = api.return(all);
 });
 router.get('/student/exam/schedule', function *(next) {
-    this.body = api.success();
+    const schedule = yield api.student.get_exam_schedule(this.userid);
+    this.body = api.return(schedule);
 });
 router.get('/student/rewards', function *(next) {
     this.body = api.success();

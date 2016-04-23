@@ -36,6 +36,15 @@ describe('Database', () => {
             a.should.have.property('userId', 'cy');
         });
     });
+    describe('function', () => {
+        it('should return array', function *() {
+            const request = yield db.request();
+            request.input('userid', '1417433001');
+            var a = yield request.query("select sj,dd,km,xxxz,bz from F_xsksap(@userid)");
+            console.log(a);
+            assert(a.length > 0);
+        });
+    });
     describe('Login', () => {
         // 0 head-teacher 班主任
         // 1 student

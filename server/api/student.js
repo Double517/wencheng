@@ -65,7 +65,7 @@ module.exports.get_score = function *(userid)
     const request = yield db.request();
     request.input('userid', userid);
 
-    // 从private void dgptkcbindsy(string sort)复制
+    // 从xscjxx.aspx private void dgptkcbindsy(string sort)复制
     // 去掉了sort
     var xhstr = "@userid";
     var sql = "select kcjc=case f.xwkc when '1' then b.kcjc+'(**)' else b.kcjc end ,a.cj, c.xxxzmc, d.ksxzmc, e.cjxzmc, a.yxxq, a.xf, a.xqbs,a.xfjd ,f.xwkc,bz=case ischongxiu when 1 then '重新学习' else ' ' end ";
@@ -93,11 +93,21 @@ module.exports.get_score_cet = function *(userid)
     const request = yield db.request();
     request.input('userid', userid);
 
-    // 从private void dgqtkcbind(string sort)复制
+    // 从xscjxx.aspx private void dgqtkcbind(string sort)复制
     // 去掉了sort
     var sqlstr = "select a.cj,a.kssj,a.xqbs,b.ksjc,dd=case dd when 0 then '不合格' when 1 then '合格' when 2 then '优秀' end  from dj_cj_new as a left join qtksxmb as b ";
     sqlstr += "on a.ksxmdm=b.ksxmdm  where xh=@userid";
 
     const result = yield request.query(sqlstr);
+    return result;
+};
+
+module.exports.get_exam_schedule = function *(userid)
+{
+    const request = yield db.request();
+    request.input('userid', userid);
+    // xsksap.aspx private void dgbind(string sort)
+    const result = yield request.query("select sj,dd,km,xxxz,bz from F_xsksap(@userid)");
+
     return result;
 };

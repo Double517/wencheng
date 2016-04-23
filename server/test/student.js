@@ -50,7 +50,7 @@ describe('课表', function() {
             assert(result.length > 0);
         });
     });
-    describe('CET', () => {
+    describe('CET成绩', () => {
         const userid = '1217433001';
         it('should return array', function *() {
             const result = yield *student_api.get_score_cet(userid);
@@ -58,5 +58,12 @@ describe('课表', function() {
             assert(result.length > 0);
         });
     });
+    describe('考试安排', () => {
+        const userid = '1417433001';
+        it('should return array', function *() {
+            const result = yield *student_api.get_exam_schedule(userid);
+            console.log(result);
+            assert(result.length > 0);
+        });
+    });
 });
-

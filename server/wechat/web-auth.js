@@ -50,8 +50,12 @@ module.exports = function *(next){
     const request = yield db.request();
     request.input('openid', this.openid);
     const result = yield request.queryOne('select userid from wechat_bind where openid=@openid');
-    this.userid = result.userid;
-
+    if (result) {
+        this.userid = result.userid;
+    } else {
+        // TODO: 这里做个校验 还需要重新规划下路径
+        //未绑定, 理论上只有get_bind和post_bind才会未绑定
+    }
 
     console.log('wechat web auth code '+ code + ' -> this.openid ' + this.openid + ' -> userid ' + this.userid);
     yield *next;
