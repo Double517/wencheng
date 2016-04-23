@@ -130,7 +130,8 @@ router.get('/student/score/all', function *(next) {
     this.body = api.return(all);
 });
 router.get('/student/score/cet', function *(next) {
-    this.body = api.success();
+    const all = yield api.student.get_score_cet(this.userid);
+    this.body = api.return(all);
 });
 router.get('/student/exam/schedule', function *(next) {
     this.body = api.success();

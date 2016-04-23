@@ -85,7 +85,19 @@ module.exports.get_score = function *(userid)
     //sql = sql + " order by "+sort;
 
     const result = yield request.query(sql);
-
     return result;
 };
 
+module.exports.get_score_cet = function *(userid)
+{
+    const request = yield db.request();
+    request.input('userid', userid);
+
+    // 从private void dgqtkcbind(string sort)复制
+    // 去掉了sort
+    var sqlstr = "select a.cj,a.kssj,a.xqbs,b.ksjc,dd=case dd when 0 then '不合格' when 1 then '合格' when 2 then '优秀' end  from dj_cj_new as a left join qtksxmb as b ";
+    sqlstr += "on a.ksxmdm=b.ksxmdm  where xh=@userid";
+
+    const result = yield request.query(sqlstr);
+    return result;
+};

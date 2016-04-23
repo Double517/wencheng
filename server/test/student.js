@@ -50,5 +50,13 @@ describe('课表', function() {
             assert(result.length > 0);
         });
     });
+    describe('CET', () => {
+        const userid = '1217433001';
+        it('should return array', function *() {
+            const result = yield *student_api.get_score_cet(userid);
+            console.log(result);
+            assert(result.length > 0);
+        });
+    });
 });
 
