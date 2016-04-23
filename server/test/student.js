@@ -5,6 +5,7 @@ const chai = require('chai')
 
 const util = require('../api/util');
 const student_api = require('../api/student');
+const db = require('../database');
 
 describe('课表', function() {
     describe('教学第几周', function () {
@@ -39,6 +40,14 @@ describe('课表', function() {
             var result = yield *student_api.get_today_class_schedule(userid);
             console.log(result);
             assert(result.list.length > 0);
+        });
+    });
+    describe('成绩', () => {
+        const userid = '1217433001';
+        it('should return array', function *() {
+            const result = yield *student_api.get_score(userid);
+            console.log(result);
+            assert(result.length > 0);
         });
     });
 });

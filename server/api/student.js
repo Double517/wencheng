@@ -59,3 +59,33 @@ module.exports.get_today_class_schedule = function *(userid)
     });
     return {day: day, list: r};
 };
+
+module.exports.get_score = function *(userid)
+{
+    const request = yield db.request();
+    request.input('userid', userid);
+
+    // 从private void dgptkcbindsy(string sort)复制
+    // 去掉了sort
+    var xhstr = "@userid";
+    var sql = "select kcjc=case f.xwkc when '1' then b.kcjc+'(**)' else b.kcjc end ,a.cj, c.xxxzmc, d.ksxzmc, e.cjxzmc, a.yxxq, a.xf, a.xqbs,a.xfjd ,f.xwkc,bz=case ischongxiu when 1 then '重新学习' else ' ' end ";
+    sql = sql + " from xscjb as a, kcxxb as b, xxxzb as c , ksxzb as d, cjxzb as e ,jxjhb as f,xsb as g";
+    sql = sql + " where a.jh_kcdm = b.kcdm and a.xxxzdm = c.xxxzdm and a.ksxzdm = d.ksxzdm ";
+    // sql = sql + " and a.cjxzdm = e.cjxzdm and a.xh ='" + xhstr + "' and ((a.cj is not null and a.cjxzdm='1') or (a.cj is null and a.cjxzdm<>'1'))  ";
+    sql = sql + " and a.cjxzdm = e.cjxzdm and a.xh =" + xhstr + " and ((a.cj is not null and a.cjxzdm='1') or (a.cjxzdm<>'1'))  ";
+    sql = sql + " and a.xh=g.xh and g.zxjhnf=f.rxsj and g.zydm=f.zydm and f.kcdm=a.jh_kcdm ";
+    sql = sql + " union  ";
+    sql = sql + " select  b.kcjc as kcjc,a.cj, c.xxxzmc, d.ksxzmc, e.cjxzmc, a.yxxq, a.xf, a.xqbs,a.xfjd ,0 as xwkc,bz=case ischongxiu when 1 then '重新学习' else ' ' end";
+    sql = sql + " from xscjb as a, kcxxb as b, xxxzb as c , ksxzb as d, cjxzb as e ";
+    sql = sql + " where a.jh_kcdm = b.kcdm and a.xxxzdm = c.xxxzdm and a.ksxzdm = d.ksxzdm ";
+    //sql = sql + " and a.cjxzdm = e.cjxzdm and a.xh ='" + xhstr + "' and ((a.cj is not null and a.cjxzdm='1') or (a.cj is null and a.cjxzdm<>'1'))  ";
+    sql = sql + " and a.cjxzdm = e.cjxzdm and a.xh =" + xhstr + " and ((a.cj is not null and a.cjxzdm='1') or (a.cjxzdm<>'1'))  ";
+    sql = sql + " and  a.jh_kcdm not in ( select distinct  kcdm from jxjhb as f, xsb as g where g.xh =" + xhstr + " and ";
+    sql = sql + " g.zydm = f.zydm and g.zxjhnf = f.rxsj )   ";
+    //sql = sql + " order by "+sort;
+
+    const result = yield request.query(sql);
+
+    return result;
+};
+

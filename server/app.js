@@ -125,6 +125,22 @@ router.get('/student/class_schedule', function *(next) {
     const schedule = yield api.student.get_this_week_class_schedule(this.userid);
     this.body = api.return(schedule);
 });
+router.get('/student/score/all', function *(next) {
+    const all = yield api.student.get_score(this.userid);
+    this.body = api.return(all);
+});
+router.get('/student/score/cet', function *(next) {
+    this.body = api.success();
+});
+router.get('/student/exam/schedule', function *(next) {
+    this.body = api.success();
+});
+router.get('/student/rewards', function *(next) {
+    this.body = api.success();
+});
+router.get('/student/behavior', function *(next) {
+    this.body = api.success();
+});
 
 // 临时的页面
 //

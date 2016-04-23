@@ -1,4 +1,5 @@
 const constants = require('../constants');
+const redirectUrlToPage = require('../wechat/messages').redirectUrlToPage;
 
 const keys = module.exports.keys = {
     i_am_student: 'i_am_student',
@@ -42,12 +43,12 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"学期成绩",
-                    "url":"http://www.soso.com/"
+                    "url":redirectUrlToPage('student/score/all')
                 },
                 {
                     "type":"view",
                     "name":"四六级成绩",
-                    "url":"http://www.soso.com/"
+                    "url":redirectUrlToPage('student/score/cet')
                 }]
         },
         {
@@ -56,17 +57,17 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"考试安排",
-                    "url":"http://www.soso.com/"
+                    "url":redirectUrlToPage('student/exam/schedule')
                 },
                 {
                     "type":"view",
                     "name":"奖惩信息",
-                    "url":"http://www.soso.com/"
+                    "url":redirectUrlToPage('student/rewards')
                 },
                 {
                     "type":"view",
                     "name":"行为学分",
-                    "url":"http://www.soso.com/"
+                    "url":redirectUrlToPage('student/behavior')
                 },
                 {
                     "type":"click",
