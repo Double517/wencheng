@@ -12,6 +12,10 @@ module.exports.success = function () {
     return {code:0};
 };
 
+module.exports.returnList = function (list) {
+    return module.exports.return({list: list});
+};
+
 module.exports.example = require('./messages');
 module.exports.wechat = require('./wechat');
 module.exports.student = require('./student');

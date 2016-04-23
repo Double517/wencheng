@@ -127,15 +127,15 @@ router.get('/student/class_schedule', function *(next) {
 });
 router.get('/student/score/all', function *(next) {
     const all = yield api.student.get_score(this.userid);
-    this.body = api.return(all);
+    this.body = api.returnList(all);
 });
 router.get('/student/score/cet', function *(next) {
     const all = yield api.student.get_score_cet(this.userid);
-    this.body = api.return(all);
+    this.body = api.returnList(all);
 });
 router.get('/student/exam/schedule', function *(next) {
     const schedule = yield api.student.get_exam_schedule(this.userid);
-    this.body = api.return(schedule);
+    this.body = api.returnList(schedule);
 });
 router.get('/student/rewards', function *(next) {
     this.body = api.success();
