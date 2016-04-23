@@ -75,4 +75,17 @@ describe('课表', function() {
             assert(result.list.length > 0);
         });
     });
+    describe('奖励处分', () => {
+        const userid = '1117408001';
+        it('should return array', function *() {
+            const r1 = yield *student_api.get_rewards(userid);
+            console.log(r1);
+
+            const r2 = yield *student_api.get_punishment(userid);
+            console.log(r2);
+
+            assert(r1.length > 0);
+            assert(r2.length > 0);
+        });
+    });
 });

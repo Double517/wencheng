@@ -138,7 +138,12 @@ router.get('/student/exam/schedule', function *(next) {
     this.body = api.returnList(schedule);
 });
 router.get('/student/rewards', function *(next) {
-    this.body = api.success();
+    const all = yield api.student.get_rewards(this.userid);
+    this.body = api.returnList(all);
+});
+router.get('/student/punishment', function *(next) {
+    const all = yield api.student.get_punishment(this.userid);
+    this.body = api.returnList(all);
 });
 router.get('/student/behavior', function *(next) {
     const result = yield api.student.get_behavior(this.userid);

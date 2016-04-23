@@ -62,7 +62,7 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"奖惩信息",
-                    "url":redirectUrlToPage('student/rewards')
+                    "url":redirectUrlToPage('student/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
                 },
                 {
                     "type":"view",

@@ -112,6 +112,31 @@ module.exports.get_exam_schedule = function *(userid)
     return result;
 };
 
+module.exports.get_rewards = function *(userid)
+{
+    // stuxsjlxx.aspx
+
+    const request = yield db.request();
+    request.input('userid', userid);
+    const result = yield request.query("select 奖励学期,  级别名称,  项目名称, 科目名称,奖励金额, 奖励时间 , 奖励文号 , 备注  from v_学生奖励一览表 where 学号=@userid order by 奖励学期,奖励时间");
+
+    return result;
+};
+
+module.exports.get_punishment = function *(userid)
+{
+    // stuxsjlxx.aspx
+
+    const request = yield db.request();
+    request.input('userid', userid);
+    var sql = " select 处分名称, 处分原因, 处分学期, 处分时间,处分文号,降级学期, 降级时间, 降级文号,  ";
+    sql += " case 是否撤销 when 0 then '否' when 1 then '撤销' when 2 then '解除考察期' else '' end 是否撤销, 撤销学期, 撤销时间, 撤销文号,  备注 ";
+    sql += " from v_学生处分一览表 where 学号=@userid";
+    const result = yield request.query(sql);
+
+    return result;
+};
+
 module.exports.get_behavior = function *(userid)
 {
     // xwxf_detail.aspx
