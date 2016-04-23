@@ -141,7 +141,8 @@ router.get('/student/rewards', function *(next) {
     this.body = api.success();
 });
 router.get('/student/behavior', function *(next) {
-    this.body = api.success();
+    const result = yield api.student.get_behavior(this.userid);
+    this.body = api.return(result);
 });
 
 // 临时的页面

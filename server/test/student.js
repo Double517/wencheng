@@ -66,4 +66,13 @@ describe('课表', function() {
             assert(result.length > 0);
         });
     });
+    describe('行为学分', () => {
+        const userid = '1417433001';
+        it('should return array', function *() {
+            const result = yield *student_api.get_behavior(userid);
+            console.log(result);
+            assert(result.total > 0);
+            assert(result.list.length > 0);
+        });
+    });
 });

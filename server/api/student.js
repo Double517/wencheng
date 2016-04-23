@@ -111,3 +111,19 @@ module.exports.get_exam_schedule = function *(userid)
 
     return result;
 };
+
+module.exports.get_behavior = function *(userid)
+{
+    // xwxf_detail.aspx
+
+    const r1 = yield db.request();
+    r1.input('userid', userid);
+    const total = yield r1.queryOne("select xwxf from v_行为学分_汇总表 where xh=@userid");
+
+    const r2 = yield db.request();
+    r2.input('userid', userid);
+    const list = yield r2.query("select xh 学号, XM 姓名, xqbs 学期, bhvName 行为名称 , fs 分数, Memo 备注, CreateDate 录入日期 from v_行为学分_学生行为列表 where xh=@userid order by xqbs");
+
+    const result = {total: total.xwxf, list: list};
+    return result;
+};
