@@ -40,10 +40,10 @@ module.exports = {
         }),
         new ExtractTextPlugin('weui.min.css'),
         new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     sourceMap: false,
-        //     mangle: false
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            mangle: false
+        }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'example/index.html')
         }),

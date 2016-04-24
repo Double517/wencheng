@@ -15,6 +15,9 @@ import 'weui';
 import Home from './pages/home/index';
 
 import Bind from './pages/bind/index';
+import ClassSchedule from './pages/class_schedule/index';
+
+
 
 class App extends React.Component {
         render() {
@@ -39,6 +42,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                     <IndexRoute component={Home}/>
                     <Route path="bind" component={Bind}/>
+                    <Route path="class_schedule" component={ClassSchedule}/>
             </Route>
     </Router>
 ), document.getElementById('container'));
