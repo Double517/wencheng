@@ -43,12 +43,12 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"学期成绩",
-                    "url":redirectUrlToPage('student/score/all')
+                    "url":redirectUrlToPage('api/student/score/all')
                 },
                 {
                     "type":"view",
                     "name":"四六级成绩",
-                    "url":redirectUrlToPage('student/score/cet')
+                    "url":redirectUrlToPage('api/student/score/cet')
                 }]
         },
         {
@@ -57,17 +57,17 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"考试安排",
-                    "url":redirectUrlToPage('student/exam/schedule')
+                    "url":redirectUrlToPage('api/student/exam/schedule')
                 },
                 {
                     "type":"view",
                     "name":"奖惩信息",
-                    "url":redirectUrlToPage('student/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
+                    "url":redirectUrlToPage('api/student/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
                 },
                 {
                     "type":"view",
                     "name":"行为学分",
-                    "url":redirectUrlToPage('student/behavior')
+                    "url":redirectUrlToPage('api/student/behavior')
                 },
                 {
                     "type":"click",

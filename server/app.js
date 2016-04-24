@@ -6,13 +6,13 @@ const serve = require('koa-static');
 const koa = require('koa');
 const path = require('path');
 const app = module.exports = koa();
-const router = require('koa-router')();
 const onerror = require('koa-onerror');
 const json = require('koa-json');
 const session = require('koa-generic-session');
 const SQLite3Store = require('koa-sqlite3-session');
 const bodyParser = require('koa-bodyparser');
 const assert = require('chai').assert;
+const proxy = require('koa-proxy');
 
 // config
 const keys = require('./config/keys');
@@ -20,9 +20,7 @@ const config = require('./config/config.js');
 
 // 1st
 const constants = require('./constants');
-const db = require('./database');
-const apiError = require('./api/error');
-const api = require('./api');
+const apiRouter = require('./router/api');
 
 // wechat
 const wechat = require('co-wechat');
@@ -41,6 +39,15 @@ console.format = function(c) {
 
 // onerror
 onerror(app);
+
+// proxy for client
+app.use(proxy({
+    host:  'http://localhost:8080',
+    match: /^(?!\/(api|wechat))/
+}));
+// TODO: 提供bind页
+//router.get('/bind', api.page.bind);
+
 
 // Logger
 app.use(logger());
@@ -64,7 +71,7 @@ if (config.NODE_ENV === 'development') {
 }
 
 // Serve static files
-app.use(serve(path.join(__dirname, 'public')));
+//app.use(serve(path.join(__dirname, 'public')));
 
 // wechat
 app.use(function *(next) {
@@ -98,65 +105,9 @@ app.use(function *(next) {
     return yield *next;
 });
 
-// routers
-// example
-//
-router.get('/', api.example.home);
-router.get('/messages', api.example.list);
-router.get('/messages/:id', api.example.fetch);
-router.post('/messages', api.example.create);
-router.get('/async', api.example.delay);
-router.get('/promise', api.example.promise);
-router.get('/db', function *() {
-    var a = yield db.query('select * from UserRoles');
-    this.body = a;
-});
-
-// wechat
-//
-router.post('/api/bind', api.wechat.bind);
-
-// teacher
-//
-
-// student
-//
-router.get('/student/class_schedule', function *(next) {
-    const schedule = yield api.student.get_this_week_class_schedule(this.userid);
-    this.body = api.return(schedule);
-});
-router.get('/student/score/all', function *(next) {
-    const all = yield api.student.get_score(this.userid);
-    this.body = api.returnList(all);
-});
-router.get('/student/score/cet', function *(next) {
-    const all = yield api.student.get_score_cet(this.userid);
-    this.body = api.returnList(all);
-});
-router.get('/student/exam/schedule', function *(next) {
-    const schedule = yield api.student.get_exam_schedule(this.userid);
-    this.body = api.returnList(schedule);
-});
-router.get('/student/rewards', function *(next) {
-    const all = yield api.student.get_rewards(this.userid);
-    this.body = api.returnList(all);
-});
-router.get('/student/punishment', function *(next) {
-    const all = yield api.student.get_punishment(this.userid);
-    this.body = api.returnList(all);
-});
-router.get('/student/behavior', function *(next) {
-    const result = yield api.student.get_behavior(this.userid);
-    this.body = api.return(result);
-});
-
-// 临时的页面
-//
-router.get('/bind', api.page.bind);
-
 // router
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(apiRouter.routes());
+app.use(apiRouter.allowedMethods());
 
 // Compress
 // compress 以后研究 先去掉

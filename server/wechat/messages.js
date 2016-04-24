@@ -24,6 +24,6 @@ module.exports.refollow = function() {
 
 module.exports.today_class_schedule = function (schedule) {
     const json = JSON.stringify(schedule, null, 4);
-    const more = sprintf('\n\n<a href="%s">【点击这里查看更多】</a>', redirectUrlToPage('student/class_schedule'));
+    const more = sprintf('\n\n<a href="%s">【点击这里查看更多】</a>', redirectUrlToPage('api/student/class_schedule'));
     return json + more;
 };
