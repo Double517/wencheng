@@ -40,6 +40,6 @@ module.exports.today_class_schedule = function (schedule) {
         });
     }
 
-    const more = sprintf('\n<a href="%s">【点击这里本周课表】</a>', redirectUrlToPage('api/student/class_schedule'));
+    const more = sprintf('\n<a href="%s">【点击这里本周课表】</a>', redirectUrlToPage('#/class_schedule'));
     return content + more;
 };
