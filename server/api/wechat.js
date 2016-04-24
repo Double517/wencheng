@@ -5,7 +5,8 @@ const api = require('../api');
 const assert = require('chai').assert;
 const wechat_api = require('../wechat').wechat_api;
 
-module.exports.bind = function *() {
+module.exports.bind = function *()
+{
     const userid = this.request.body.username;
     const password = this.request.body.password;
     const openid = this.openid;
@@ -76,4 +77,21 @@ module.exports.bind = function *() {
     } else {
         this.body = api.return(apiError.password_error);
     }
+};
+
+module.exports.getJsConfig = function *()
+{
+    const url = this.request.body.url;
+    console.log({url: url});
+    // TODO: jsApiList as params
+    
+    const param = {
+        debug: true,
+        jsApiList: ['closeWindow'],
+        url: url
+    };
+    const jsconfig = yield wechat_api.getJsConfig(param);
+    console.log(jsconfig);
+
+    this.body = jsconfig;
 };

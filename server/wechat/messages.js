@@ -13,7 +13,7 @@ module.exports.redirectUrlToPage = function (page) {
 };
 
 module.exports.bind = function() {
-    const url = redirectUrlToPage('bind');
+    const url = redirectUrlToPage('#/bind');
     const reply = sprintf('<a href="%s">【点击这里绑定学号】</a>\n\n绑定后即可查询', url);
     return reply;
 };

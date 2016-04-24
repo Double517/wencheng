@@ -27,8 +27,9 @@ router.get('/db', function *() {
 
 // wechat
 //
+// TODO: 这两个接口统一成 {code, msg, data}的格式
 router.post('/bind', api.wechat.bind);
-//router.post('/jsconfig', api.wechat.xxx);
+router.post('/getJsConfig', api.wechat.getJsConfig);
 
 // teacher
 //

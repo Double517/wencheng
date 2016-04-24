@@ -21,6 +21,8 @@ const config = require('./config/config.js');
 // 1st
 const constants = require('./constants');
 const apiRouter = require('./router/api');
+const apiError = require('./api/error');
+const api = require('./api');
 
 // wechat
 const wechat = require('co-wechat');
@@ -92,8 +94,9 @@ app.use(function *(next) {
     }
 
     // 临时放在这, 之后把绑定, 登录的放在router之前
-    if (this.path === '/bind' ||
-        this.path === '/api/bind') {
+    if (this.path === '/#/bind' ||
+        this.path === '/api/bind' ||
+        this.path === '/api/getJsConfig') {// TODO: 卧槽这个接口不要授权?
         return yield *next;
     }
 
