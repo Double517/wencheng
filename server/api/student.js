@@ -57,7 +57,7 @@ module.exports.get_today_class_schedule = function *(userid)
             r.push(item);
         }
     });
-    return {day: day, list: r};
+    return {day: day, list: r, week: result.week};
 };
 
 module.exports.get_score = function *(userid)

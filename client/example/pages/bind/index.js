@@ -26,6 +26,9 @@ import Page from '../../component/page';
 
 export default class Bind extends React.Component {
     componentDidMount() {
+
+        // 拿到微信接口权限
+        //
         var url = location.protocol + '//' + location.host + location.pathname;
         var data = JSON.stringify({ url: url});
         console.log(data);

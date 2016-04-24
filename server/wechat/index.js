@@ -134,7 +134,7 @@ function *handleClickEvent(message, userid) {
             return messages.today_class_schedule(schedule);
             break;
         case enentKeys.unbind:
-            return 'unbind';
+            return '回复unbind解绑';
             break;
         default:
             console.log(eventKey);
