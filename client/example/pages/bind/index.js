@@ -7,44 +7,25 @@
 import React from 'react';
 import { ButtonArea,
     Button,
-    Cells,
-    CellsTitle,
-    CellsTips,
-    Cell,
     CellHeader,
     CellBody,
-    CellFooter,
     Form,
     FormCell,
-    Icon,
     Input,
     Label,
+    Toast,
 } from 'react-weui';
 
 import Page from '../../component/page';
 
-
 export default class Bind extends React.Component {
+    constructor (props) {
+        super(props);
+
+        this.state = { submitting: false, errMsg: null};
+    }
     componentDidMount() {
-
-        // 拿到微信接口权限
-        //
-        var url = location.protocol + '//' + location.host + location.pathname;
-        var data = JSON.stringify({ url: url});
-        console.log(data);
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/getJsConfig',
-            data: data,
-            contentType: 'application/json',
-            success: function(data){
-                wx.config(data);
-            },
-            error: function(xhr, type){
-                alert('Ajax error!')
-            }
-        });
+        this.loadWXConfig();
     }
     render() {
         return (
@@ -72,10 +53,33 @@ export default class Bind extends React.Component {
                     <Button onClick={this.submit.bind(this)}>确定</Button>
                     <Button type="default">取消</Button>
                 </ButtonArea>
+
+                <Toast icon="loading" show={this.state.submitting}>正在加载中...</Toast>
+                <Toast show={this.state.errMsg != null}>{this.state.errMsg}</Toast>
             </Page>
+
         );
     }
-    onPasswordChange(event){
+    // 拿到微信接口权限
+    loadWXConfig() {
+        var url = location.protocol + '//' + location.host + location.pathname;
+        var data = JSON.stringify({ url: url});
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/getJsConfig',
+            data: data,
+            contentType: 'application/json',
+            success: function(data){
+                wx.config(data);
+            },
+            error: function(xhr, type){
+                this.showToast('Ajax error!');
+            }
+        });
+    }
+    onPasswordChange(event) {
         this.setState({password: event.target.value});
     }
     onUsernameChange(event) {
@@ -83,6 +87,8 @@ export default class Bind extends React.Component {
     }
     submit() {
         console.log(this.state);
+
+        this.setState({submitting: true});
 
         var data = JSON.stringify({ username: this.state.username, password: this.state.password, code: getParameterByName('code')});
         console.log(data);
@@ -92,17 +98,26 @@ export default class Bind extends React.Component {
             url: '/api/bind',
             data: data,
             contentType: 'application/json',
-            success: function(data){
+            success: (data) => {
+                this.setState({submitting: false});
+
                 if (data.code == 0) {
                     wx.closeWindow();
                 } else {
-                    alert(data.msg);
+                    this.showToast(data.msg);
                 }
             },
-            error: function(xhr, type){
-                alert('Ajax error!')
+            error: (xhr, type) => {
+                this.showToast('Ajax error!');
             }
         });
+    }
+
+    showToast(errMsg) {
+        this.setState({errMsg: errMsg});
+        setTimeout(()=> {
+            this.setState({errMsg: null});
+        }, 1000);
     }
 };
 
