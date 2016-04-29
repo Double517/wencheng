@@ -71,12 +71,24 @@ export default class ListView extends React.Component {
             table.push(section_titles[i]);
             table.push(section_rows[i]);
         }
-        if (table.length === 0) {
+
+        var components = [];
+        if (this.props.headerView) {
+            components.push(this.props.headerView)
+        }
+        if (table.length > 0) {
+            components.push(table);
+        }
+        if (this.props.footerView) {
+            components.push(this.props.footerView)
+        }
+
+        if (components.length === 0) {
             return (null);
         } else {
             return (
                 <div>
-                    {table}
+                    {components}
                 </div>
             );
         }
@@ -96,5 +108,7 @@ ListView.defaultProps = {
 };
 
 ListView.propTypes = {
-    sections: React.PropTypes.array
+    sections: React.PropTypes.array,
+    headerView: React.PropTypes.element,
+    footerView: React.PropTypes.element,
 };
