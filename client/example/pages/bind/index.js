@@ -73,7 +73,7 @@ export default class Bind extends React.Component {
                 wx.config(data);
             },
             error: function(xhr, type){
-                this.page.showError('Ajax error!');
+                this.page.showAlert('Ajax error!');
             }
         });
     }
@@ -113,13 +113,13 @@ export default class Bind extends React.Component {
                     this.page.showSuccess('绑定成功');
                     wx.closeWindow();
                 } else {
-                    this.page.showError(data.msg);
+                    this.page.showAlert(data.msg);
                 }
             },
             error: (xhr, type) => {
                 console.log(type);
                 console.log(xhr);
-                this.page.showError('Ajax error!');
+                this.page.showAlert('Ajax error!');
             }
         });
     }

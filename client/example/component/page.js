@@ -5,7 +5,8 @@
 "use strict";
 
 import React from 'react';
-import {Toast} from 'react-weui';
+import {Toast, Dialog} from 'react-weui';
+const {Alert, Confirm} = Dialog;
 
 import './page.less';
 
@@ -16,6 +17,8 @@ export default class Page extends React.Component {
 
         this.state = {
             toast: {show: false, icon:'', msg:''},
+            alert: {show: false, title:'', content:'', buttons:[]},
+            confirm: {show: false, title:'', content:'', buttons:[]},
         };
         this.toastTimer = null;
     }
@@ -40,11 +43,32 @@ export default class Page extends React.Component {
                        show={this.state.toast.show}>
                     {this.state.toast.msg}
                 </Toast>
+                <Alert title={this.state.alert.title} buttons={this.state.alert.buttons} show={this.state.alert.show}>
+                    {this.state.alert.content}
+                </Alert>
+                <Confirm title={this.state.confirm.title} buttons={this.state.confirm.buttons} show={this.state.confirm.show}>
+                    {this.state.confirm.content}
+                </Confirm>
             </section>
         );
     }
 
+
+    hideAll() {
+        if (this.state.toast.show) {
+            this.hideToast();
+        }
+        if (this.state.alert.show) {
+            this.hideAlert();
+        }
+        if (this.state.confirm.show) {
+            this.hideConfirm();
+        }
+    }
+
     showToast(icon, msg, duration) {
+        this.hideAll();
+
         if (this.toastTimer) {
             clearTimeout(this.toastTimer);
             this.toastTimer = null;
@@ -65,10 +89,42 @@ export default class Page extends React.Component {
     showSuccess(msg) {
         this.showToast('toast', msg?msg:'成功', 1.5);
     }
-    showError(msg) {
-        this.showToast('success', msg?msg:'失败', 1.5);
-    }
+
     showLoading(msg) {
         this.showToast('loading', msg?msg:'加载中...');
+    }
+
+    showAlert(content, buttons, title = '错误') {
+        this.hideAll();
+        if (!buttons) {
+            buttons = [{
+                label: '好的',
+                onClick: this.hideAlert.bind(this)
+            }];
+        }
+        var alert = {
+            title: title,
+            content: content,
+            buttons: buttons,
+            show:true
+        };
+        this.setState({alert:alert});
+    }
+    hideAlert() {
+        this.setState({alert: {show: false, title:'', content:'', buttons:[]}});
+    }
+
+    showConfirm(title, content, buttons) {
+        this.hideAll();
+        var confirm = {
+            title: title,
+            content: content,
+            buttons: buttons,
+            show:true
+        };
+        this.setState({confirm: confirm});
+    }
+    hideConfirm() {
+        this.setState({confirm: {show: false, title:'', content:'', buttons:[]}});
     }
 };
