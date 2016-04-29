@@ -17,7 +17,7 @@ import Home from './pages/home/index';
 import Bind from './pages/bind/index';
 import ClassSchedule from './pages/class_schedule/index';
 
-
+const vConsole = require('./util/vconsole.min.js');
 
 class App extends React.Component {
         render() {
