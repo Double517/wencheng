@@ -49,12 +49,12 @@ export default class ListView extends React.Component {
         var section_titles = this.props.sections.map((section) => {
             return (<CellsTitle>{section.header.title}</CellsTitle>);
         });
-
+        
         var section_rows = this.props.sections.map((section) => {
             var rows = [];
             for (var i = 0; i < section.rows.length; i++) {
                 var item = section.rows[i];
-                rows.push(<Cell>
+                rows.push(<Cell href={item.jumpUrl}>
                     <CellBody>
                         {item.title}
                     </CellBody>
@@ -63,7 +63,7 @@ export default class ListView extends React.Component {
                     </CellFooter>
                 </Cell>);
             }
-            return (<Cells>{rows}</Cells>);
+            return (<Cells access={!!section.header.access}>{rows}</Cells>);
         });
 
         var table = [];
@@ -98,10 +98,11 @@ export default class ListView extends React.Component {
 /*
  sections =  [
     {
-        header:{title:'', ...},
-        rows:[{}, {}]
+        header:{title:'', access:true ...},
+        rows:[{title, subTitle, jumpUrl}, {}]
     }
  ]
+ 其中access只能按section配置, 不能指定单独cell
  */
 ListView.defaultProps = {
     sections: []
