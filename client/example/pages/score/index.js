@@ -7,10 +7,9 @@
 import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
-
 import {getWXCode, splitArray} from '../../util/index';
 
-export default class ClassSchedule extends React.Component {
+export default class Score extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,33 +17,27 @@ export default class ClassSchedule extends React.Component {
         };
     }
     componentDidMount() {
-        this.loadSchedule();
+        this.loadScore();
     }
-    loadSchedule() {
-        $.getJSON('api/student/class_schedule', {code: getWXCode()}, (data, status) => {
+    loadScore() {
+        $.getJSON('api/student/score/all', {code: getWXCode()}, (data, status) => {
             console.log(data);
             if (status === 'success' && data.code === 0) {
-                //{ kcmc: '科技英语（G）', skxq: 5, qsjc: 3, jsjc: 4, zxz: 0, ksz: 1, jsz: 18, jsdm: 'GS301' }
 
-                var bucket = splitArray(data.data.list, 'skxq');
+                var bucket = splitArray(data.data.list, 'xqbs');
+                console.log(bucket);
 
                 var sections = [];
-                var cnChars = ['零','一','二','三','四','五','六','七','八','九'];
 
                 bucket.forEach(function(object) {
 
-                    var title = '星期'+cnChars[object.key];
+                    var title = object.key;
                     var list = object.list;
 
-                    var items = list.map((r) => {
-                        var title = '';
-                        if (r.jsjc > r.qsjc) {
-                            title = '第'+r.qsjc+'-'+r.jsjc+'节';
-                        } else {
-                            title = '第'+r.qsjc+'节';
-                        }
-                        return {title: title, subTitle: r.kcmc};
+                    var items = list.map((row) => {
+                        return {title: row.kcjc, subTitle: row.cj};
                     });
+
                     sections.push({header: {title: title}, rows: items});
                 });
 
@@ -57,7 +50,7 @@ export default class ClassSchedule extends React.Component {
     }
     render() {
         return (
-            <Page className="cell" title="课表">
+            <Page className="cell" title="成绩">
                 <ListView sections={this.state.sections} />
             </Page>
         );

@@ -16,6 +16,9 @@ import Home from './pages/home/index';
 
 import Bind from './pages/bind/index';
 import ClassSchedule from './pages/class_schedule/index';
+import Score from './pages/score/index';
+import ScoreDetail from './pages/score/detail';
+
 
 const vConsole = require('./util/vconsole.min.js');
 
@@ -43,6 +46,8 @@ ReactDOM.render((
                     <IndexRoute component={Home}/>
                     <Route path="bind" component={Bind}/>
                     <Route path="class_schedule" component={ClassSchedule}/>
+                    <Route path="scores" component={Score}/>
+                    <Route path="score/:data" component={ScoreDetail}/>
             </Route>
     </Router>
 ), document.getElementById('container'));
