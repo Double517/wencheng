@@ -30,6 +30,7 @@ export default class Behavior extends React.Component {
                         title: row['行为名称'],
                         subTitle: '',
                         jumpUrl: '#/behavior/detail/' + JSON.stringify(row),
+                        key: row['行为名称']+row['录入日期']/*行为名称+录入日期*/
                     };
                 });
                 var section = {header: {title: '', access: true}, rows: items};

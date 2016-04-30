@@ -31,6 +31,7 @@ export default class ExamSchedule extends React.Component {
                         title: row.km,
                         subTitle: '',/*row.sj*/
                         jumpUrl: '#/exam/schedule/detail/' + JSON.stringify(row),
+                        key: row.km+row.sj /*科目+时间*/
                     };
                 });
                 var section = {header: {title: '', access: true}, rows: items};

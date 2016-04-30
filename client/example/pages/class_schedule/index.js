@@ -29,7 +29,7 @@ export default class ClassSchedule extends React.Component {
                 var bucket = splitArray(data.data.list, 'skxq');
 
                 var sections = [];
-                var cnChars = ['零','一','二','三','四','五','六','七','八','九'];
+                var cnChars = ['零','一','二','三','四','五','六','日'];
 
                 bucket.forEach(function(object) {
 
@@ -43,7 +43,11 @@ export default class ClassSchedule extends React.Component {
                         } else {
                             title = '第'+r.qsjc+'节';
                         }
-                        return {title: title, subTitle: r.kcmc};
+                        return {
+                            title: title,
+                            subTitle: r.kcmc,
+                            key: title+r.kcmc+r.skxq /*节+课程+上课星期*/
+                        };
                     });
                     sections.push({header: {title: title}, rows: items});
                 });

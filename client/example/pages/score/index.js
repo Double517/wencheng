@@ -42,6 +42,7 @@ export default class Score extends React.Component {
                                 title: row.kcjc,
                                 subTitle: row.cj,
                                 jumpUrl: '#/score/detail/' + JSON.stringify(row),
+                                key: row.kcjc + row.cj + row.xqbs /*课程+成绩+学期*/
                             };
                         });
 
@@ -57,6 +58,7 @@ export default class Score extends React.Component {
                             title: row.kcjc,
                             subTitle: row.cj,
                             jumpUrl: '#/score/detail/' + JSON.stringify(row),
+                            key: row.kcjc + row.cj + row.xqbs /*课程+成绩+学期*/
                         };
                     });
 
@@ -66,6 +68,7 @@ export default class Score extends React.Component {
                         title: '查看所有成绩',
                         subTitle: '',
                         jumpUrl: '#/score/all/',
+                        key: '查看所有成绩'
                     }]});
                 }
 

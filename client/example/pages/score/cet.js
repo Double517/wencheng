@@ -28,7 +28,11 @@ export default class CetScore extends React.Component {
                 var rows = data.data.list.map(function(object) {
                     var title = object.ksjc + ': ' + object.cj;
                     var subTitle = moment(object.kssj).format('YYYY-MM-DD');
-                    return {title, subTitle};
+                    return {
+                        title,
+                        subTitle,
+                        key:object.kssj/*考试时间*/
+                    };
                 });
                 var section = {header: {title: ''}, rows: rows};
                 console.log(section);

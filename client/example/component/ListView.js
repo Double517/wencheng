@@ -54,8 +54,10 @@ export default class ListView extends React.Component {
             var rows = [];
             for (var i = 0; i < section.rows.length; i++) {
                 var item = section.rows[i];
-                var key = item.key || item.title + item.subTitle;
-                rows.push(<Cell href={item.jumpUrl} key={key}>
+                if (!item.key) {
+                    throw new Error('必须提供唯一的key');
+                }
+                rows.push(<Cell href={item.jumpUrl} key={item.key}>
                     <CellBody>
                         {item.title}
                     </CellBody>

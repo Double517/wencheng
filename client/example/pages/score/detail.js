@@ -39,7 +39,9 @@ export default class ScoreDetail extends React.Component {
         };
 
         var rows = Object.keys(titles).map(function (key) {
-            return {title: titles[key], subTitle: item[key], key:key};
+            var title = titles[key];
+            var subTitle = item[key];
+            return {title: title, subTitle: subTitle, key:title+subTitle};
         });
         var section = {header: {title: ''}, rows: rows};
         console.log([section]);
