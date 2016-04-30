@@ -5,10 +5,10 @@
 "use strict";
 
 import React from 'react';
-import Page from '../../../component/page';
-import ListView from '../../../component/ListView';
+import Page from '../../component/page';
+import ListView from '../../component/ListView';
 
-export default class ExamScheduleDetail extends React.Component {
+export default class BehaviorDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,11 +27,13 @@ export default class ExamScheduleDetail extends React.Component {
 
         var item = JSON.parse(data);
         var titles = {
-            sj: '时间',
-            dd: '地点',
-            km: '考试科目',
-            xxxz: '学习性质',
-            bz: '学习备注',
+            '学号': '学号',
+            '姓名': '姓名',
+            '学期': '学期',
+            '行为名称': '行为名称',
+            '分数': '分数',
+            '备注': '备注',
+            '录入日期': '录入日期',
         };
 
         var rows = Object.keys(titles).map(function (key) {
@@ -43,7 +45,7 @@ export default class ExamScheduleDetail extends React.Component {
     }
     render() {
         return (
-            <Page ref="page" className="cell" title="考试安排">
+            <Page ref="page" className="cell" title="行为学分">
                 <ListView sections={this.state.sections} />
             </Page>
         );

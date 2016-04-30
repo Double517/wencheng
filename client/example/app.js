@@ -21,6 +21,8 @@ import ScoreDetail from './pages/score/detail';
 import CetScore from './pages/score/cet';
 import ExamSchedule from './pages/exam/schedule/index';
 import ExamScheduleDetail from './pages/exam/schedule/detail';
+import Behavior from './pages/behavior/index';
+import BehaviorDetail from './pages/behavior/detail';
 
 const vConsole = require('./util/vconsole.min.js');
 
@@ -54,7 +56,8 @@ ReactDOM.render((
                     <Route path="exam/schedule" component={ExamSchedule}/>
                     <Route path="exam/schedule/detail/:data" component={ExamScheduleDetail}/>
                     <Route path="rewards" component={CetScore}/>
-                    <Route path="behavior" component={CetScore}/>
+                    <Route path="behavior" component={Behavior}/>
+                    <Route path="behavior/detail/:data" component={BehaviorDetail}/>
             </Route>
     </Router>
 ), document.getElementById('container'));
