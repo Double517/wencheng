@@ -47,7 +47,7 @@ export default class ListView extends React.Component {
     render() {
 
         var section_titles = this.props.sections.map((section) => {
-            return (<CellsTitle>{section.header.title}</CellsTitle>);
+            return (<CellsTitle style={{height:'1.5em'}}>{section.header.title}</CellsTitle>);
         });
 
         var section_rows = this.props.sections.map((section) => {
@@ -58,8 +58,8 @@ export default class ListView extends React.Component {
                     throw new Error('必须提供唯一的key');
                 }
                 rows.push(<Cell href={item.jumpUrl} key={item.key}>
-                    <CellBody>
-                        {item.title}
+                    <CellBody style={{minWidth:'27%'}}>
+                       {item.title}
                     </CellBody>
                     <CellFooter>
                         {item.subTitle}
