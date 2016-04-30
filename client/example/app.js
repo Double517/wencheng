@@ -47,10 +47,12 @@ ReactDOM.render((
                     <IndexRoute component={Home}/>
                     <Route path="bind" component={Bind}/>
                     <Route path="class_schedule" component={ClassSchedule}/>
-                    <Route path="score" component={Score}/>
-                    <Route path="score/:data" component={Score}/>
+                    <Route path="score(/:filter)" component={Score}/>
                     <Route path="score/detail/:data" component={ScoreDetail}/>
                     <Route path="cet" component={CetScore}/>
+                    <Route path="exam/schedule" component={CetScore}/>
+                    <Route path="rewards" component={CetScore}/>
+                    <Route path="behavior" component={CetScore}/>
             </Route>
     </Router>
 ), document.getElementById('container'));

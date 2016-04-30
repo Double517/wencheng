@@ -57,17 +57,17 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"考试安排",
-                    "url":redirectUrlToPage('api/student/exam/schedule')
+                    "url":redirectUrlToPage('#/exam/schedule')
                 },
                 {
                     "type":"view",
                     "name":"奖惩信息",
-                    "url":redirectUrlToPage('api/student/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
+                    "url":redirectUrlToPage('#/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
                 },
                 {
                     "type":"view",
                     "name":"行为学分",
-                    "url":redirectUrlToPage('api/student/behavior')
+                    "url":redirectUrlToPage('#/behavior')
                 },
                 {
                     "type":"click",
