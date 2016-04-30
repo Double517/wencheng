@@ -24,13 +24,31 @@ export default class Score extends React.Component {
             console.log(data);
             if (status === 'success' && data.code === 0) {
 
+                var filter = this.props.params.filter;
+                var displayAll = (filter === 'all');
+
                 var bucket = splitArray(data.data.list, 'xqbs');
                 console.log(bucket);
 
                 var sections = [];
 
-                bucket.forEach(function(object) {
+                if (displayAll) {
+                    bucket.forEach(function (object) {
+                        var title = object.key;
+                        var list = object.list;
 
+                        var items = list.map((row) => {
+                            return {
+                                title: row.kcjc,
+                                subTitle: row.cj,
+                                jumpUrl: '#/score/detail/' + JSON.stringify(row),
+                            };
+                        });
+
+                        sections.push({header: {title: title, access: true}, rows: items});
+                    });
+                } else {
+                    var object = bucket[bucket.length-1];
                     var title = object.key;
                     var list = object.list;
 
@@ -38,12 +56,18 @@ export default class Score extends React.Component {
                         return {
                             title: row.kcjc,
                             subTitle: row.cj,
-                            jumpUrl:'#/score/detail/'+JSON.stringify(row),
+                            jumpUrl: '#/score/detail/' + JSON.stringify(row),
                         };
                     });
 
-                    sections.push({header: {title: title, access:true}, rows: items});
-                });
+                    sections.push({header: {title: title, access: true}, rows: items});
+
+                    sections.push({header: {title: '更多', access: true}, rows: [{
+                        title: '查看所有成绩',
+                        subTitle: '',
+                        jumpUrl: '#/score/all/',
+                    }]});
+                }
 
                 console.log(sections);
                 this.setState({sections: sections});
