@@ -25,7 +25,7 @@ export default class ScoreDetail extends React.Component {
             return;
         }
 
-        var item = JSON.parse(data);
+        var item = JSON.parse(decodeURIComponent(data));
         var titles = {
             kcjc: '课程名称',
             xf: '学分',

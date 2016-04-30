@@ -25,7 +25,7 @@ export default class ExamScheduleDetail extends React.Component {
             return;
         }
 
-        var item = JSON.parse(data);
+        var item = JSON.parse(decodeURIComponent(data));
         var titles = {
             sj: '时间',
             dd: '地点',

@@ -29,7 +29,7 @@ export default class Behavior extends React.Component {
                     return {
                         title: row['行为名称'],
                         subTitle: '',
-                        jumpUrl: '#/behavior/detail/' + JSON.stringify(row),
+                        jumpUrl: '#/behavior/detail/' + encodeURIComponent(JSON.stringify(row)),
                         key: row['行为名称']+row['录入日期']/*行为名称+录入日期*/
                     };
                 });

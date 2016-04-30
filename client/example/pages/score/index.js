@@ -57,7 +57,7 @@ export default class Score extends React.Component {
                         return {
                             title: row.kcjc,
                             subTitle: row.cj,
-                            jumpUrl: '#/score/detail/' + JSON.stringify(row),
+                            jumpUrl: '#/score/detail/' + encodeURIComponent(JSON.stringify(row)),
                             key: row.kcjc + row.cj + row.xqbs /*课程+成绩+学期*/
                         };
                     });

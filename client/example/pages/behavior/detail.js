@@ -25,7 +25,7 @@ export default class BehaviorDetail extends React.Component {
             return;
         }
 
-        var item = JSON.parse(data);
+        var item = JSON.parse(decodeURIComponent(data));
         var titles = {
             '学号': '学号',
             '姓名': '姓名',

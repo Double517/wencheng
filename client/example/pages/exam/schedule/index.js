@@ -30,7 +30,7 @@ export default class ExamSchedule extends React.Component {
                     return {
                         title: row.km,
                         subTitle: '',/*row.sj*/
-                        jumpUrl: '#/exam/schedule/detail/' + JSON.stringify(row),
+                        jumpUrl: '#/exam/schedule/detail/' + encodeURIComponent(JSON.stringify(row)),
                         key: row.km+row.sj /*科目+时间*/
                     };
                 });

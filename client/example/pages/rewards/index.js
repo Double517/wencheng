@@ -34,7 +34,7 @@ export default class Rewards extends React.Component {
                         return {
                             title: row['科目名称'],
                             subTitle: '',
-                            jumpUrl: '#/rewards/detail/' + JSON.stringify(row),
+                            jumpUrl: '#/rewards/detail/' + encodeURIComponent(JSON.stringify(row)),
                             key:row['科目名称'] + row['奖励时间']
                         };
                     });
@@ -42,7 +42,7 @@ export default class Rewards extends React.Component {
                         return {
                             title: row['处分名称'],
                             subTitle: '',
-                            jumpUrl: '#/rewards/detail/' + JSON.stringify(row),
+                            jumpUrl: '#/rewards/detail/' + encodeURIComponent(JSON.stringify(row)),
                             key:row['处分名称'] + row['处分时间']
                         };
                     });

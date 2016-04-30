@@ -25,7 +25,7 @@ export default class RewardsDetail extends React.Component {
             return;
         }
 
-        var item = JSON.parse(data);
+        var item = JSON.parse(decodeURIComponent(data));
 
         var rows = Object.keys(item).map(function (key) {
             var title = key;
