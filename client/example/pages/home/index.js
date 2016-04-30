@@ -16,10 +16,19 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <Page ref="page" className="home" title="WeUI" subTitle="为微信Web服务量身设计">
+            <Page ref="page" className="home" title="面板" subTitle="">
                 <ButtonArea>
                     <Button>确定</Button>
                     <Button type="default">取消</Button>
+                    
+                    <Button onClick={(e)=>this.jump(e, 'bind')}>绑定</Button>
+                    <Button onClick={(e)=>this.jump(e, 'class_schedule')}>课表</Button>
+                    <Button onClick={(e)=>this.jump(e, 'score')}>成绩</Button>
+                    <Button onClick={(e)=>this.jump(e, 'cet')}>四六级</Button>
+                    <Button onClick={(e)=>this.jump(e, 'exam/schedule')}>考试安排</Button>
+                    <Button onClick={(e)=>this.jump(e, 'behavior')}>行为学分</Button>
+                    <Button onClick={(e)=>this.jump(e, 'rewards')}>奖惩</Button>
+
                     <Button size="small" onClick={(e)=>this.showSuccessToast(e)}>showSuccessToast</Button>
                     <Button size="small" onClick={(e)=>this.showSuccessToast(e, 'success')}>showSuccessToast('success')</Button>
                     <Button size="small" onClick={(e)=>this.showLoading(e, 'loading')}>showLoading('loading')</Button>
@@ -31,10 +40,14 @@ export default class Home extends React.Component {
         );
     }
 
+    jump(e, url) {
+        window.location.hash = '#'+url;
+    }
+
     showSuccessToast(e, msg){
         this.page.showSuccess(msg);
     }
-    
+
     showLoading(e, msg) {
         this.page.showLoading(msg);
 
