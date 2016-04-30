@@ -43,12 +43,12 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"学期成绩",
-                    "url":redirectUrlToPage('api/student/score/all')
+                    "url":redirectUrlToPage('#/score')
                 },
                 {
                     "type":"view",
                     "name":"四六级成绩",
-                    "url":redirectUrlToPage('api/student/score/cet')
+                    "url":redirectUrlToPage('#/cet')
                 }]
         },
         {

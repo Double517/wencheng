@@ -49,12 +49,13 @@ export default class ListView extends React.Component {
         var section_titles = this.props.sections.map((section) => {
             return (<CellsTitle>{section.header.title}</CellsTitle>);
         });
-        
+
         var section_rows = this.props.sections.map((section) => {
             var rows = [];
             for (var i = 0; i < section.rows.length; i++) {
                 var item = section.rows[i];
-                rows.push(<Cell href={item.jumpUrl}>
+                var key = item.key || item.title + item.subTitle;
+                rows.push(<Cell href={item.jumpUrl} key={key}>
                     <CellBody>
                         {item.title}
                     </CellBody>

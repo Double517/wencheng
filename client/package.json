@@ -33,6 +33,7 @@
   "homepage": "https://github.com/weui/react-weui",
   "dependencies": {
     "classnames": "^2.2.0",
+    "moment": "^2.13.0",
     "react": "^0.14.2",
     "react-weui": "^0.3.0",
     "weui": "^0.4.1"

@@ -35,10 +35,14 @@ export default class Score extends React.Component {
                     var list = object.list;
 
                     var items = list.map((row) => {
-                        return {title: row.kcjc, subTitle: row.cj};
+                        return {
+                            title: row.kcjc,
+                            subTitle: row.cj,
+                            jumpUrl:'#/score/detail/'+JSON.stringify(row),
+                        };
                     });
 
-                    sections.push({header: {title: title}, rows: items});
+                    sections.push({header: {title: title, access:true}, rows: items});
                 });
 
                 console.log(sections);
