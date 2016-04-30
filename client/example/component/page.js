@@ -22,6 +22,11 @@ export default class Page extends React.Component {
         };
         this.toastTimer = null;
     }
+
+    componentDidMount() {
+        document.title = this.props.title;
+    }
+
     componentWillUnmount() {
         this.toastTimer && clearTimeout(this.toastTimer);
     }
