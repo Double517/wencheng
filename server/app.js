@@ -42,17 +42,20 @@ console.format = function(c) {
 // onerror
 onerror(app);
 
+// Logger
+app.use(logger());
+
+// Compress
+app.use(compress({
+    threshold: 2048, //min:2k
+    flush: require('zlib').Z_SYNC_FLUSH
+}));
+
 // proxy for client
 app.use(proxy({
     host:  'http://localhost:8080',
     match: /^(?!\/(api|wechat))/
 }));
-// TODO: 提供bind页
-//router.get('/bind', api.page.bind);
-
-
-// Logger
-app.use(logger());
 
 // koa-bodyparser: post body parser, for application/json and application/x-www-form-urlencoded.
 // the parsed body will store in this.request.body
@@ -111,10 +114,6 @@ app.use(function *(next) {
 // router
 app.use(apiRouter.routes());
 app.use(apiRouter.allowedMethods());
-
-// Compress
-// compress 以后研究 先去掉
-// app.use(compress());
 
 // error handler
 app.on('error', function(err, ctx){
