@@ -13,8 +13,9 @@ var config = {
         'moment', 'react-weui', 'webpack-zepto']
     },
     output: {
+        publicPath: 'http://7j1zl7.com1.z0.glb.clouddn.com/wxjs/',
         path: path.resolve(__dirname, 'dist'),
-        filename: './bundle.js'
+        filename: 'bundle.[chunkhash:8].js'
     },
     module: {
         loaders:[
@@ -40,7 +41,7 @@ var config = {
             __DEBUG__: process.env.NODE_ENV !== 'production'
         }),
         new ExtractTextPlugin('weui.min.css'),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.[chunkhash:8].js'),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src/index.html')
         }),

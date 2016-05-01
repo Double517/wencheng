@@ -287,7 +287,7 @@
     <property name="SearchEverywhereHistoryKey" value="web&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/wechat/web-auth.js&#10;da&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/test/database.js&#10;data&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/test/database.js&#10;app.js&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/app.js&#10;keys&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/config/keys.js&#10;datab&#9;null&#9;null&#10;mssql&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/node_modules/.bin/mssql&#10;database&#9;null&#9;null&#10;message.&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/controllers/messages.js&#10;wechat/in&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/wechat/index.js&#10;wechat&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/node_modules/co-wechat/lib/wechat.js&#10;wechat-&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/node_modules/co-wechat-api/coverage/wechat-enterprise/lib/wechat-enterprise.js.html&#10;wechat/i&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/wencheng/server/wechat/index.js&#10;PreparedStatement&#9;null&#9;null&#10;koa/&#9;FILE&#9;file:///Users/wujichao/Documents/大学/论文/project/server/node_modules/koa&#10;koa&#9;null&#9;null" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
-  <component name="RunManager" selected="Node.js.nodemon">
+  <component name="RunManager" selected="Node.js.deploy">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -459,7 +459,7 @@
       <workItem from="1461142483626" duration="34549000" />
       <workItem from="1461289376823" duration="43985000" />
       <workItem from="1461476979744" duration="14280000" />
-      <workItem from="1462109032712" duration="2291000" />
+      <workItem from="1462109032712" duration="3232000" />
     </task>
     <servers />
   </component>
@@ -496,11 +496,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="165719000" />
+    <option name="totallyTimeSpent" value="166660000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21640626" sideWeight="0.4891775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
