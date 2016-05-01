@@ -9,6 +9,7 @@ import Page from '../../component/page';
 import ListView from '../../component/ListView';
 import {getWXCode, splitArray} from '../../util/index';
 const moment = require('moment');
+import $ from 'webpack-zepto';
 
 export default class CetScore extends React.Component {
     constructor(props) {

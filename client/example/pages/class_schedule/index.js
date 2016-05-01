@@ -7,6 +7,7 @@
 import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
+import $ from 'webpack-zepto';
 
 import {getWXCode, splitArray} from '../../util/index';
 

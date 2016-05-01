@@ -10,7 +10,7 @@ import './index.less';
 import {
     Button,ButtonArea
 } from 'react-weui';
-
+import $ from 'webpack-zepto';
 
 export default class Home extends React.Component {
 
@@ -20,7 +20,7 @@ export default class Home extends React.Component {
                 <ButtonArea>
                     <Button>确定</Button>
                     <Button type="default">取消</Button>
-                    
+
                     <Button onClick={(e)=>this.jump(e, 'bind')}>绑定</Button>
                     <Button onClick={(e)=>this.jump(e, 'class_schedule')}>课表</Button>
                     <Button onClick={(e)=>this.jump(e, 'score')}>成绩</Button>

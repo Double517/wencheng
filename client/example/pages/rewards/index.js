@@ -8,6 +8,7 @@ import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
 import {getWXCode, splitArray} from '../../util/index';
+import $ from 'webpack-zepto';
 
 export default class Rewards extends React.Component {
     constructor(props) {

@@ -17,6 +17,7 @@ import { ButtonArea,
 } from 'react-weui';
 
 const wx = require('weixin-js-sdk');
+import $ from 'webpack-zepto';
 
 import Page from '../../component/page';
 

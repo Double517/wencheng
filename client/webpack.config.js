@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         js: './app.js',
         vendor: ['react', 'classnames', 'react-router', 'react-dom', 'react-addons-css-transition-group',
-        'moment', 'react-weui']
+        'moment', 'react-weui', 'webpack-zepto']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
