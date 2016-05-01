@@ -1,0 +1,5 @@
+{
+    "src": "/home/your/code/dist",
+    "dest": "qiniu:access_key=<access_key>&secret_key=<secret_key>&bucket=<bucket>&key_prefix=wxjs/",
+    "debug_level": 1
+}
