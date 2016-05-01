@@ -5,8 +5,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
-module.exports = {
-    context: path.join(__dirname, 'example'),
+var config = {
+    context: path.join(__dirname, 'src'),
     entry: {
         js: './app.js',
         vendor: ['react', 'classnames', 'react-router', 'react-dom', 'react-addons-css-transition-group',
@@ -41,13 +41,20 @@ module.exports = {
         }),
         new ExtractTextPlugin('weui.min.css'),
         new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     sourceMap: true,
-        //     mangle: false
-        // }),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'example/index.html')
+            template: path.join(__dirname, 'src/index.html')
         }),
         //new OpenBrowserPlugin({ url: 'http://localhost:8080' })
     ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+    config.plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            mangle: false
+        })
+    );
+}
+
+module.exports = config;
