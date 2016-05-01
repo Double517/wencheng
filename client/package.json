@@ -5,7 +5,7 @@
   "main": "./lib",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --progress --colors --port 8080",
-    "deploy": "NODE_ENV=production webpack --progress --colors"
+    "deploy": "mv dist __dist__; mkdir dist; mv __dist__ \"dist/`date '+%Y%m%d-%H%M%S'`\"; NODE_ENV=production webpack --progress --colors"
   },
   "repository": {
     "type": "git",
