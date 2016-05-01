@@ -7,8 +7,9 @@
 import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
-import {getWXCode, splitArray} from '../../util/index';
-import $ from 'webpack-zepto';
+
+import Ajax from '../../util/ajax';
+import splitArray from '../../util/splitArray';
 
 export default class Score extends React.Component {
     constructor(props) {
@@ -21,14 +22,12 @@ export default class Score extends React.Component {
         this.loadScore();
     }
     loadScore() {
-        $.getJSON('api/student/score/all', {code: getWXCode()}, (data, status) => {
-            console.log(data);
-            if (status === 'success' && data.code === 0) {
-
+        Ajax.get('api/student/score/all')
+            .then((data) => {
                 var filter = this.props.params.filter;
                 var displayAll = (filter === 'all');
 
-                var bucket = splitArray(data.data.list, 'xqbs');
+                var bucket = splitArray(data.list, 'xqbs');
                 console.log(bucket);
 
                 var sections = [];
@@ -75,16 +74,20 @@ export default class Score extends React.Component {
 
                 console.log(sections);
                 this.setState({sections: sections});
-            } else {
-                alert(data);
-            }
-        });
+            })
+            .catch((err) => {
+                this.page.showAlert(err.msg);
+            });
     }
     render() {
         return (
-            <Page className="cell" title="成绩">
+            <Page ref="page" className="cell" title="成绩">
                 <ListView sections={this.state.sections} />
             </Page>
         );
+    }
+
+    get page() {
+        return this.refs.page;
     }
 };

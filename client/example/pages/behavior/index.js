@@ -7,8 +7,7 @@
 import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
-import {getWXCode, splitArray} from '../../util/index';
-import $ from 'webpack-zepto';
+import Ajax from '../../util/ajax';
 
 export default class Behavior extends React.Component {
     constructor(props) {
@@ -21,11 +20,9 @@ export default class Behavior extends React.Component {
         this.loadScore();
     }
     loadScore() {
-        $.getJSON('api/student/behavior', {code: getWXCode()}, (data, status) => {
-            console.log(data);
-            if (status === 'success' && data.code === 0) {
-
-                var list = data.data.list;
+        Ajax.get('api/student/behavior')
+            .then((data) => {
+                var list = data.list;
                 var items = list.map((row) => {
                     return {
                         title: row['行为名称'],
@@ -38,16 +35,20 @@ export default class Behavior extends React.Component {
                 console.log(section);
 
                 this.setState({sections: [section]});
-            } else {
-                alert(data);
-            }
-        });
+            })
+            .catch((err) => {
+                this.page.showAlert(err.msg);
+            });
     }
     render() {
         return (
-            <Page className="cell" title="行为学分">
+            <Page ref="page" className="cell" title="行为学分">
                 <ListView sections={this.state.sections} />
             </Page>
         );
+    }
+
+    get page() {
+        return this.refs.page;
     }
 };

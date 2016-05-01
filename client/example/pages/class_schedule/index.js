@@ -7,9 +7,9 @@
 import React from 'react';
 import Page from '../../component/page';
 import ListView from '../../component/ListView';
-import $ from 'webpack-zepto';
 
-import {getWXCode, splitArray} from '../../util/index';
+import Ajax from '../../util/ajax';
+import splitArray from '../../util/splitArray';
 
 export default class ClassSchedule extends React.Component {
     constructor(props) {
@@ -22,12 +22,11 @@ export default class ClassSchedule extends React.Component {
         this.loadSchedule();
     }
     loadSchedule() {
-        $.getJSON('api/student/class_schedule', {code: getWXCode()}, (data, status) => {
-            console.log(data);
-            if (status === 'success' && data.code === 0) {
+        Ajax.get('api/student/class_schedule')
+            .then((data) => {
                 //{ kcmc: '科技英语（G）', skxq: 5, qsjc: 3, jsjc: 4, zxz: 0, ksz: 1, jsz: 18, jsdm: 'GS301' }
 
-                var bucket = splitArray(data.data.list, 'skxq');
+                var bucket = splitArray(data.list, 'skxq');
 
                 var sections = [];
                 var cnChars = ['零','一','二','三','四','五','六','日'];
@@ -55,16 +54,20 @@ export default class ClassSchedule extends React.Component {
 
                 console.log(sections);
                 this.setState({sections: sections});
-            } else {
-                alert(data);
-            }
-        });
+            })
+            .catch((err) => {
+                this.page.showAlert(err.msg);
+            });
     }
     render() {
         return (
-            <Page className="cell" title="课表">
+            <Page ref="page" className="cell" title="课表">
                 <ListView sections={this.state.sections} />
             </Page>
         );
+    }
+
+    get page() {
+        return this.refs.page;
     }
 };
