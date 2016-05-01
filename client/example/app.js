@@ -29,21 +29,15 @@ import RewardsDetail from './pages/rewards/detail';
 const vConsole = require('./util/vconsole.min.js');
 
 class App extends React.Component {
-        render() {
-                return (
-                    <ReactCSSTransitionGroup
-                        component="div"
-                        transitionName="page"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={500}
-                        style={{height: '100%'}}
-                    >
-                            {React.cloneElement(this.props.children, {
-                                    key: this.props.location.pathname
-                            })}
-                    </ReactCSSTransitionGroup>
-                );
-        }
+    render() {
+        return (
+            <div>
+                {React.cloneElement(this.props.children, {
+                    key: this.props.location.pathname
+                })}
+            </div>
+        );
+    }
 }
 
 ReactDOM.render((
