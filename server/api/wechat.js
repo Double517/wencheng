@@ -84,7 +84,7 @@ module.exports.getJsConfig = function *()
     const url = this.request.body.url;
     console.log({url: url});
     // TODO: jsApiList as params
-    
+
     const param = {
         debug: true,
         jsApiList: ['closeWindow'],
@@ -93,5 +93,5 @@ module.exports.getJsConfig = function *()
     const jsconfig = yield wechat_api.getJsConfig(param);
     console.log(jsconfig);
 
-    this.body = jsconfig;
+    this.body = api.return(jsconfig);
 };

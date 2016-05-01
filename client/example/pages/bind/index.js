@@ -17,7 +17,7 @@ import { ButtonArea,
 } from 'react-weui';
 
 const wx = require('weixin-js-sdk');
-import $ from 'webpack-zepto';
+import Ajax from '../../util/ajax';
 
 import Page from '../../component/page';
 
@@ -35,7 +35,7 @@ export default class Bind extends React.Component {
                 <Form>
                     <FormCell>
                         <CellHeader>
-                            <Label>账号</Label>
+                            <Label style={{width:'60px'}}>账号</Label>
                         </CellHeader>
                         <CellBody>
                         <Input onChange={e=>this.onUsernameChange(e)} ref="username" type="text" placeholder="请输入账号"/>
@@ -43,7 +43,7 @@ export default class Bind extends React.Component {
                     </FormCell>
                     <FormCell>
                         <CellHeader>
-                            <Label>密码</Label>
+                            <Label style={{width:'60px'}}>密码</Label>
                         </CellHeader>
                         <CellBody>
                             <Input onChange={e=>this.onPasswordChange(e)} ref="password" type="password" placeholder="请输入密码"/>
@@ -64,21 +64,13 @@ export default class Bind extends React.Component {
     // 拿到微信接口权限
     loadWXConfig() {
         var url = location.protocol + '//' + location.host + location.pathname;
-        var data = JSON.stringify({ url: url});
-        console.log(data);
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/getJsConfig',
-            data: data,
-            contentType: 'application/json',
-            success: function(data){
+        Ajax.post('/api/getJsConfig', {url:url})
+            .then((data) => {
                 wx.config(data);
-            },
-            error: function(xhr, type){
-                this.page.showAlert('Ajax error!');
-            }
-        });
+            })
+            .catch((err) => {
+                this.page.showAlert(err.msg);
+            });
     }
     onPasswordChange(event) {
         this.setState({password: event.target.value});
@@ -103,37 +95,22 @@ export default class Bind extends React.Component {
         }
 
         this.page.showLoading();
-        var data = JSON.stringify({ username: this.state.username, password: this.state.password, code: getParameterByName('code')});
+        var data = {
+            username: this.state.username,
+            password: this.state.password,
+        };
         console.log(data);
-        $.ajax({
-            type: 'POST',
-            url: '/api/bind',
-            data: data,
-            contentType: 'application/json',
-            success: (data) => {
-                console.log(data);
-                if (data.code == 0) {
-                    this.page.showSuccess('绑定成功');
-                    wx.closeWindow();
-                } else {
-                    this.page.showAlert(data.msg);
-                }
-            },
-            error: (xhr, type) => {
-                console.log(type);
-                console.log(xhr);
-                this.page.showAlert('Ajax error!');
-            }
-        });
+        Ajax.post('/api/bind', data)
+            .then((data) => {
+                this.page.showSuccess('绑定成功');
+                wx.closeWindow();
+            })
+            .catch((err) => {
+                this.page.showAlert(err.msg);
+            });
     }
 
     get page() {
         return this.refs.page;
     }
 };
-
-function getParameterByName(name) {
-    console.log(window.location);
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.hash);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
