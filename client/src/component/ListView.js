@@ -1,11 +1,6 @@
 /**
  * Created by wujichao on 16/4/28.
  */
-/*
- headerView
- section cell(可配置cell)?  先title subtitle + jumpUrl
- footerView
-     */
 
 "use strict";
 
@@ -21,27 +16,27 @@ import {
     CellFooter,
 } from 'react-weui';
 
+/*
+ headerView
+ section cell(可配置cell)?  先title subtitle + jumpUrl
+ footerView
+ */
+
 export default class ListView extends React.Component {
     constructor (props) {
         super(props);
-
-        // this.state = { smiling: false };
-        //
-        // this.handleClick = () => {
-        //     this.setState({smiling: !this.state.smiling});
-        // };
     }
 
     componentWillMount () {
-        // add event listeners (Flux Store, WebSocket, document, etc.)
+
     }
 
     componentDidMount () {
-        // React.getDOMNode()
+
     }
 
     componentWillUnmount () {
-        // remove event listeners (Flux Store, WebSocket, document, etc.)
+
     }
 
     render() {

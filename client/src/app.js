@@ -6,10 +6,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Router, Route, IndexRoute} from 'react-router';
-// import WeUI from '../src/index';
-import WeUI from 'react-weui';
 import 'weui';
 
 import Home from './pages/home/index';
@@ -26,7 +23,9 @@ import BehaviorDetail from './pages/behavior/detail';
 import Rewards from './pages/rewards/index';
 import RewardsDetail from './pages/rewards/detail';
 
-const vConsole = require('./util/vconsole.min.js');
+if (__DEBUG__) {
+    const vConsole = require('./util/vconsole.min.js');
+}
 
 class App extends React.Component {
     render() {
@@ -42,19 +41,19 @@ class App extends React.Component {
 
 ReactDOM.render((
     <Router>
-            <Route path="/" component={App}>
-                    <IndexRoute component={Home}/>
-                    <Route path="bind" component={Bind}/>
-                    <Route path="class_schedule" component={ClassSchedule}/>
-                    <Route path="score(/:filter)" component={Score}/>
-                    <Route path="score/detail/:data" component={ScoreDetail}/>
-                    <Route path="cet" component={CetScore}/>
-                    <Route path="exam/schedule" component={ExamSchedule}/>
-                    <Route path="exam/schedule/detail/:data" component={ExamScheduleDetail}/>
-                    <Route path="behavior" component={Behavior}/>
-                    <Route path="behavior/detail/:data" component={BehaviorDetail}/>
-                    <Route path="rewards" component={Rewards}/>
-                    <Route path="rewards/detail/:data" component={RewardsDetail}/>
-            </Route>
+        <Route path="/" component={App}>
+            <IndexRoute component={Home}/>
+            <Route path="bind" component={Bind}/>
+            <Route path="class_schedule" component={ClassSchedule}/>
+            <Route path="score(/:filter)" component={Score}/>
+            <Route path="score/detail/:data" component={ScoreDetail}/>
+            <Route path="cet" component={CetScore}/>
+            <Route path="exam/schedule" component={ExamSchedule}/>
+            <Route path="exam/schedule/detail/:data" component={ExamScheduleDetail}/>
+            <Route path="behavior" component={Behavior}/>
+            <Route path="behavior/detail/:data" component={BehaviorDetail}/>
+            <Route path="rewards" component={Rewards}/>
+            <Route path="rewards/detail/:data" component={RewardsDetail}/>
+        </Route>
     </Router>
 ), document.getElementById('container'));

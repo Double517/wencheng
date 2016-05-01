@@ -51,11 +51,16 @@ app.use(compress({
     flush: require('zlib').Z_SYNC_FLUSH
 }));
 
-// proxy for client
-app.use(proxy({
-    host:  'http://localhost:8080',
-    match: /^(?!\/(api|wechat))/
-}));
+if (config.NODE_ENV === 'development') {
+    // proxy for client
+    app.use(proxy({
+        host: 'http://localhost:8080',
+        match: /^(?!\/(api|wechat))/
+    }));
+} else {
+    // Serve static files
+    app.use(serve(path.join(__dirname, '../client/dist')));
+}
 
 // koa-bodyparser: post body parser, for application/json and application/x-www-form-urlencoded.
 // the parsed body will store in this.request.body
@@ -74,9 +79,6 @@ if (config.NODE_ENV === 'development') {
 } else {
     app.use(json({ pretty: false, param: 'pretty' })); //for production
 }
-
-// Serve static files
-//app.use(serve(path.join(__dirname, 'public')));
 
 // wechat
 app.use(function *(next) {

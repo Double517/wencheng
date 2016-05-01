@@ -37,7 +37,7 @@ var config = {
     postcss: [autoprefixer],
     plugins: [
         new webpack.DefinePlugin({
-            DEBUG: process.env.NODE_ENV !== 'production'
+            __DEBUG__: process.env.NODE_ENV !== 'production'
         }),
         new ExtractTextPlugin('weui.min.css'),
         new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),

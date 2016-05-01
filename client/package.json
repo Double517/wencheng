@@ -5,14 +5,7 @@
   "main": "./lib",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --progress --colors --port 8080",
-    "clean": "rimraf ./lib ./coverage",
-    "build": "npm run clean & babel ./src --out-dir ./lib",
-    "build:example": "rimraf ./dist && webpack",
-    "lint": "eslint 'src/**/*.@(js|jsx)'",
-    "pretest": "npm run lint",
-    "test": "mocha --compilers js:babel-core/register --recursive",
-    "test:watch": "npm run test -- --watch",
-    "coverage": "npm run lint & istanbul cover _mocha -- --compilers js:babel-core/register --recursive"
+    "deploy": "NODE_ENV=production webpack --progress --colors"
   },
   "repository": {
     "type": "git",
