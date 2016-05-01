@@ -1,37 +1,25 @@
 {
-  "name": "react-weui11",
-  "version": "0.3.0",
-  "description": "weui for react",
-  "main": "./lib",
+  "name": "wencheng-client",
+  "version": "0.0.1",
+  "description": "client",
+  "main": "src/app.js",
+  "author": "",
+  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --progress --colors --port 8080",
-    "deploy": "mv dist __dist__; mkdir dist; mv __dist__ \"dist/`date '+%Y%m%d-%H%M%S'`\"; NODE_ENV=production webpack --progress --colors"
+    "deploy": "mv dist __dist__; mkdir dist; mv __dist__ \"dist/`date '+%Y%m%d-%H%M%S'`\"; NODE_ENV=production webpack --progress --colors; ls dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/weui/react-weui.git"
-  },
-  "keywords": [
-    "mobile",
-    "ui",
-    "framework",
-    "weui",
-    "react"
-  ],
-  "author": "wechat ui team",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/weui/react-weui/issues"
-  },
-  "homepage": "https://github.com/weui/react-weui",
   "dependencies": {
-    "classnames": "^2.2.0",
-    "moment": "^2.13.0",
     "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.2",
+    "weui": "^0.4.1",
     "react-weui": "^0.3.0",
-    "webpack-zepto": "0.0.1",
     "weixin-js-sdk": "^1.0.7",
-    "weui": "^0.4.1"
+    "webpack-zepto": "0.0.1",
+    "classnames": "^2.2.0",
+    "moment": "^2.13.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",
@@ -54,16 +42,13 @@
     "postcss-loader": "^0.8.2",
     "react-addons-css-transition-group": "^0.14.7",
     "react-addons-test-utils": "^0.14.3",
-    "react-dom": "^0.14.2",
     "history": "^1.17.0",
-    "react-router": "^1.0.2",
     "rimraf": "^2.4.3",
     "sinon": "^1.17.2",
     "style-loader": "^0.13.0",
     "uglify-loader": "^1.2.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.1",
-    "weui": "^0.4.0"
+    "webpack-dev-server": "^1.12.1"
   }
 }
