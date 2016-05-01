@@ -9,7 +9,8 @@ module.exports = {
     context: path.join(__dirname, 'example'),
     entry: {
         js: './app.js',
-        vendor: ['react', 'classnames', 'react-router', 'react-dom', 'react-addons-css-transition-group']
+        vendor: ['react', 'classnames', 'react-router', 'react-dom', 'react-addons-css-transition-group',
+        'moment', 'react-weui']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

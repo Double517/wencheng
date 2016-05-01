@@ -16,6 +16,8 @@ import { ButtonArea,
     Toast,
 } from 'react-weui';
 
+const wx = require('weixin-js-sdk');
+
 import Page from '../../component/page';
 
 export default class Bind extends React.Component {
