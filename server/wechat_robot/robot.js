@@ -1,19 +1,15 @@
 const wechat = require('co-wechat');
 const config = require('../config/config');
-const keys = require('../config/keys');
 const sprintf = require("sprintf-js").sprintf;
 const messages = require('./messages');
 const db = require('../database');
-const enentKeys = require('./menu_config').keys;
-const WechatAPI = require('co-wechat-api');
-const wechat_api = new WechatAPI(keys.WECHAT_APPID, keys.WECHAT_APPSECRET);
+const enentKeys = require('../wechat_config_center/menu_config').keys;
+
 const assert = require('chai').assert;
 
 const student_api = require('../api/student');
 const teacher_api = require('../api/student');
 
-
-module.exports.wechat_api = wechat_api;
 
 module.exports.robot = function *() {
     var info = this.weixin;

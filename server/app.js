@@ -26,8 +26,8 @@ const api = require('./api');
 
 // wechat
 const wechat = require('co-wechat');
-const wechat_robot = require('./wechat').robot;
-const wechat_web_auth = require('./wechat/web-auth');
+const wechat_robot = require('./wechat_robot').robot;
+const wechat_web_auth = require('./wechat_robot/web-auth');
 
 
 require('debug-trace')({

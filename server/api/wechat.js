@@ -3,7 +3,7 @@ const db = require('../database');
 const apiError = require('../api/error');
 const api = require('../api');
 const assert = require('chai').assert;
-const wechat_api = require('../wechat').wechat_api;
+const wechat_api = require('../wechat_robot').wechat_api;
 
 module.exports.bind = function *()
 {

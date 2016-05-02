@@ -1,5 +1,5 @@
 const constants = require('../constants');
-const redirectUrlToPage = require('../wechat/messages').redirectUrlToPage;
+const redirectUrlToPage = require('../wechat_robot/messages').redirectUrlToPage;
 
 const keys = module.exports.keys = {
     i_am_student: 'i_am_student',

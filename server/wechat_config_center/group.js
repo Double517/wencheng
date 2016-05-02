@@ -5,7 +5,7 @@ const chai = require('chai')
     , assert = chai.assert;
 
 const keys = require('../config/keys');
-const wechat_api = require('../wechat').wechat_api;
+const wechat_api = require('../wechat_robot').wechat_api;
 const constants = require('../constants');
 
 describe('group', () => {

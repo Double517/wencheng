@@ -9,9 +9,9 @@ const chai = require('chai')
     , assert = chai.assert;
 
 const keys = require('../config/keys');
-const wechat_api = require('../wechat').wechat_api;
+const wechat_api = require('../wechat_robot').wechat_api;
 const constants = require('../constants');
-const menu_config = require('../wechat/menu_config');
+const menu_config = require('./menu_config');
 
 describe('menu', () => {
     describe('delete all menu', () => {
