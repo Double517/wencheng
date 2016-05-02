@@ -4,6 +4,7 @@ const apiError = require('../api/error');
 const api = require('../api');
 const assert = require('chai').assert;
 const wechat_api = require('../wechat_robot').wechat_api;
+const messages = require('../wechat_robot/messages');
 
 module.exports.bind = function *()
 {
@@ -72,6 +73,9 @@ module.exports.bind = function *()
 
         // const ensure_resule = yield wechat_api.getWhichGroup(openid);
         // console.log(ensure_resule);
+
+        // 回复用户
+        yield wechat_api.sendText(openid, messages.bindSuccess());
 
         this.body = api.success();
     } else {

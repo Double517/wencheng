@@ -1,12 +1,8 @@
 const constants = require('../constants');
 const redirectUrlToPage = require('../wechat_robot/messages').redirectUrlToPage;
+const eventKeys = require('../wechat_robot/messages').eventKeys;
+const pageUrls = require('../wechat_robot/messages').pageUrls;
 
-const keys = module.exports.keys = {
-    i_am_student: 'i_am_student',
-    i_am_head_teacher: 'i_am_head_teacher',
-    today_class_schedule: 'today_class_schedule',
-    unbind: 'unbind'
-};
 
 /*
 module.exports.default_menu = {
@@ -35,7 +31,7 @@ module.exports.student_menu = {
         {
             "type":"click",
             "name":"今日课表",
-            "key":keys.today_class_schedule
+            "key":eventKeys.today_class_schedule
         },
         {
             "name":"成绩查询",
@@ -43,12 +39,12 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"学期成绩",
-                    "url":redirectUrlToPage('#/score')
+                    "url":redirectUrlToPage(pageUrls.score)
                 },
                 {
                     "type":"view",
                     "name":"四六级成绩",
-                    "url":redirectUrlToPage('#/cet')
+                    "url":redirectUrlToPage(pageUrls.cet)
                 }]
         },
         {
@@ -57,22 +53,22 @@ module.exports.student_menu = {
                 {
                     "type":"view",
                     "name":"考试安排",
-                    "url":redirectUrlToPage('#/exam/schedule')
+                    "url":redirectUrlToPage(pageUrls.exam_schedule)
                 },
                 {
                     "type":"view",
                     "name":"奖惩信息",
-                    "url":redirectUrlToPage('#/rewards')//奖励api惩罚api是分开, 前端自己取两个api的数据
+                    "url":redirectUrlToPage(pageUrls.rewards)
                 },
                 {
                     "type":"view",
                     "name":"行为学分",
-                    "url":redirectUrlToPage('#/behavior')
+                    "url":redirectUrlToPage(pageUrls.behavior)
                 },
                 {
                     "type":"click",
                     "name":"解绑",
-                    "key":keys.unbind
+                    "key":eventKeys.unbind
                 }]
         }
     ],
@@ -159,7 +155,7 @@ module.exports.head_teacher_menu = {
                 {
                     "type":"click",
                     "name":"解绑",
-                    "key":keys.unbind
+                    "key":eventKeys.unbind
                 }]
         }],
     "matchrule":{
