@@ -25,6 +25,9 @@ import {
 export default class ListView extends React.Component {
     constructor (props) {
         super(props);
+        this.state = {
+            loaded: false
+        };
     }
 
     componentWillMount () {
@@ -37,6 +40,12 @@ export default class ListView extends React.Component {
 
     componentWillUnmount () {
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            loaded: true
+        });
     }
 
     render() {
@@ -82,11 +91,17 @@ export default class ListView extends React.Component {
         }
 
         if (components.length === 0) {
-            return (
-                <div style={{textAlign:'center', marginTop:'38%'}}>
-                    没有数据
-                </div>
-            );
+            if (this.state.loaded) {
+                return (
+                    <div style={{textAlign:'center', marginTop:'38%'}}>
+                        没有数据
+                    </div>
+                );
+            } else {
+                return (
+                    <div>{null}</div>
+                );
+            }
         } else {
             return (
                 <div>
