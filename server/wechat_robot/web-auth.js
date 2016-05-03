@@ -18,8 +18,7 @@ module.exports = function *(next){
         return yield *next;
     }
 
-    // code不同账号可能是一样的 擦了...
-    var openid = null;//openid_cache.code;
+    var openid = openid_cache[code];
     if (openid) {
         console.log('hit! code ' + code + ' openid ' + openid);
     } else {
@@ -41,7 +40,8 @@ module.exports = function *(next){
         assert(_.isObject(body) && _.isString(body.openid));
 
         // cache
-        openid_cache.code = openid;
+        openid_cache[code] = openid;
+        console.log('get new code: ', code , 'openid: ', openid);
     }
 
     this.openid = openid;
