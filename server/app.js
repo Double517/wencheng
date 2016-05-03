@@ -104,7 +104,8 @@ app.use(function *(next) {
     // 临时放在这, 之后把绑定, 登录的放在router之前
     if (this.path === '/#/bind' ||
         this.path === '/api/bind' ||
-        this.path === '/api/getJsConfig') {// TODO: 卧槽这个接口不要授权?
+        this.path === '/api/getJsConfig' ||
+        this.path === '/api/reportTypeError') {// TODO: 卧槽这个接口不要授权?
         return yield *next;
     }
 

@@ -31,6 +31,12 @@ router.get('/db', function *() {
 router.post('/bind', api.wechat.bind);
 router.post('/getJsConfig', api.wechat.getJsConfig);
 
+router.get('/reportJsError', function *(next) {
+    var info = JSON.parse(this.query.info);
+    console.log(info);
+    this.body = '';
+});
+
 // teacher
 //
 
