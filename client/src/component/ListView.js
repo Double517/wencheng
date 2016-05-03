@@ -82,7 +82,11 @@ export default class ListView extends React.Component {
         }
 
         if (components.length === 0) {
-            return (null);
+            return (
+                <div style={{textAlign:'center', marginTop:'38%'}}>
+                    没有数据
+                </div>
+            );
         } else {
             return (
                 <div>
