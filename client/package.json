@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --progress --colors --port 8080",
-    "deploy": "mv dist \"qiniu/`date '+%Y%m%d-%H%M%S'`\"; mkdir dist; NODE_ENV=production webpack --progress --colors; cd qiniu; ./qrsync-v2 config.json",
+    "deploy": "mv dist \"qiniu/`date '+%Y%m%d-%H%M%S'`\"; mkdir dist; NODE_ENV=production webpack --progress --colors;sed -i '' 's/.js\"/.js\" crossorigin/g' dist/index.html; cd qiniu; ./qrsync-v2 config.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

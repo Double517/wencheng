@@ -60,6 +60,8 @@ if (config.NODE_ENV === 'development') {
 } else {
     // Serve static files
     app.use(serve(path.join(__dirname, '../client/dist')));
+    // 进index.html其他都在cdn上, 没必要缓存
+    // 即使缓存了, index.html也不能缓存, 里面有js路径要变化的
     // app.use(serve(path.join(__dirname, '../client/dist'), {
     //     maxage:7 * 24 * 60 * 60 * 1000 /*7 day*/
     // }));
