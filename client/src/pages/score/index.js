@@ -25,14 +25,13 @@ export default class Score extends React.Component {
         Ajax.get('api/student/score/all')
             .then((data) => {
                 var filter = this.props.params.filter;
-                var displayAll = (filter === 'all');
 
                 var bucket = splitArray(data.list, 'xqbs');
                 console.log(bucket);
 
                 var sections = [];
 
-                if (displayAll) {
+                if (filter === 'all') {
                     bucket.forEach(function (object) {
                         var title = object.key;
                         var list = object.list;
@@ -49,27 +48,47 @@ export default class Score extends React.Component {
                         sections.push({header: {title: title, access: true}, rows: items});
                     });
                 } else {
-                    var object = bucket[bucket.length-1];
-                    var title = object.key;
-                    var list = object.list;
 
-                    var items = list.map((row) => {
-                        return {
-                            title: row.kcjc,
-                            subTitle: row.cj,
-                            jumpUrl: '#/score/detail/' + encodeURIComponent(JSON.stringify(row)),
-                            key: row.kcjc + row.cj + row.xqbs /*课程+成绩+学期*/
-                        };
-                    });
+                    var object = null;
 
-                    sections.push({header: {title: title, access: true}, rows: items});
+                    if (!filter) {
+                        if (bucket.length > 0) {
+                            object = bucket[bucket.length-1];
+                        }
+                    } else {
+                        bucket.forEach(function (o) {
+                            if (filter === o.key) {
+                                object = o;
+                            }
+                        });
+                    }
 
-                    sections.push({header: {title: '更多', access: true}, rows: [{
-                        title: '查看所有成绩',
-                        subTitle: '',
-                        jumpUrl: '#/score/all/',
-                        key: '查看所有成绩'
-                    }]});
+                    if (object) {
+                        var title = object.key;
+                        var list = object.list;
+
+                        var terms = bucket.map(object => {
+                            return object.key;
+                        });
+
+                        var items = list.map((row) => {
+                            return {
+                                title: row.kcjc,
+                                subTitle: row.cj,
+                                jumpUrl: '#/score/detail/' + encodeURIComponent(JSON.stringify(row)),
+                                key: row.kcjc + row.cj + row.xqbs /*课程+成绩+学期*/
+                            };
+                        });
+
+                        sections.push({header: {title: '', access: true}, rows: [{
+                            title: '学期',
+                            subTitle: title,
+                            jumpUrl: '#/score/select/' + encodeURIComponent(JSON.stringify(terms)),
+                            key: '选择学期'
+                        }]});
+
+                        sections.push({header: {title: '', access: true}, rows: items});
+                    }
                 }
 
                 console.log(sections);
