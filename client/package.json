@@ -11,15 +11,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "classnames": "^2.2.0",
+    "moment": "^2.13.0",
+    "object-assign": "^4.1.0",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^1.0.2",
-    "weui": "^0.4.1",
     "react-weui": "^0.3.0",
-    "weixin-js-sdk": "^1.0.7",
     "webpack-zepto": "0.0.1",
-    "classnames": "^2.2.0",
-    "moment": "^2.13.0"
+    "weixin-js-sdk": "^1.0.7",
+    "weui": "^0.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",

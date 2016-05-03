@@ -1,10 +1,11 @@
 
 import $ from 'webpack-zepto';
+const objectAssign = require('object-assign');
 
 export default class Ajax {
 
     static get(url, params) {
-        params = Object.assign(this.commonParams(), params);
+        params = objectAssign(this.commonParams(), params);
         console.log(`---> get:${url}, params:${JSON.stringify(params, null, 4)}`);
         var promise = new Promise(function(resolve, reject) {
             $.ajax({
@@ -35,7 +36,7 @@ export default class Ajax {
     }
 
     static post(url, data) {
-        data = Object.assign(this.commonParams(), data);
+        data = objectAssign(this.commonParams(), data);
         console.log(`---> post:${url}, data:${JSON.stringify(data, null, 4)}`);
         var promise = new Promise(function(resolve, reject) {
             $.ajax({
