@@ -54,7 +54,7 @@ app.use(compress({
 if (config.NODE_ENV === 'development') {
     // proxy for client
     app.use(proxy({
-        host: 'http://localhost:8080',
+        host: 'http://localhost:3001', //'http://localhost:8080'
         match: /^(?!\/(api|wechat))/
     }));
 } else {
@@ -107,7 +107,8 @@ app.use(function *(next) {
     if (this.path === '/#/bind' ||
         this.path === '/api/bind' ||
         this.path === '/api/getJsConfig' ||
-        this.path === '/api/reportTypeError') {// TODO: 卧槽这个接口不要授权?
+        this.path === '/api/reportTypeError' ||
+        this.path.indexOf('/api/manager') !== -1) {// TODO: 卧槽这个接口不要授权?
         return yield *next;
     }
 
