@@ -124,3 +124,26 @@ router.post('/manager/group/move', function *(next) {
     }
 });
 
+router.post('/manager/group/add', function *(next) {
+    const group_name = this.request.body.group_name;
+    console.log({group_name});
+    try {
+        var result = yield wechat_api.createGroup(group_name);
+        this.body = api.success();
+    } catch (e) {
+        console.log(e);
+        this.body = api.return(apiError.server_error);
+    }
+});
+
+router.post('/manager/group/remove', function *(next) {
+    const group_id = this.request.body.group_id;
+    console.log({group_id});
+    try {
+        var result = yield wechat_api.removeGroup(group_id);
+        this.body = api.success();
+    } catch (e) {
+        console.log(e);
+        this.body = api.return(apiError.server_error);
+    }
+});
