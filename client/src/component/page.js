@@ -7,6 +7,7 @@
 import React from 'react';
 import {Toast, Dialog} from 'react-weui';
 const {Alert, Confirm} = Dialog;
+import $ from 'webpack-zepto';
 
 import './page.less';
 
@@ -25,6 +26,13 @@ export default class Page extends React.Component {
 
     componentDidMount() {
         document.title = this.props.title;
+
+        // iOS的wechat无法通过document.title改变页面title
+        var $iframe = $('<iframe src="/favicon.ico"></iframe>').on('load', function() {
+            setTimeout(function() {
+                $iframe.off('load').remove()
+            }, 0);
+        }).appendTo($('body'));
     }
 
     componentWillUnmount() {

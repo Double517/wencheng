@@ -49,7 +49,7 @@ export default class ScoreDetail extends React.Component {
     }
     render() {
         return (
-            <Page ref="page" className="cell" title="成绩">
+            <Page ref="page" className="cell" title="成绩详情">
                 <ListView sections={this.state.sections} />
             </Page>
         );
