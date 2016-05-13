@@ -155,3 +155,36 @@ router.post('/manager/group/remove', function *(next) {
         this.body = api.return(apiError.server_error);
     }
 });
+
+router.get('/manager/menu/all', function *(next) {
+    const result = yield wechat_api.getMenu();
+    console.log(result);
+    //{menu:{}, conditionalmenu:[{},{}]}
+    this.body = api.return(result);
+});
+
+router.post('/manager/menu/update', function *(next) {
+    const config = this.request.body.config;
+    console.log(config);
+    var result = null;
+    try {
+        result = yield* wechat_api.removeMenu();
+        console.log(result);
+
+        result = yield* wechat_api.createMenu(config.menu);
+        console.log(result);
+
+        if (config.conditionalmenu && config.conditionalmenu.length > 0) {
+            for (var i = 0; i < config.conditionalmenu.length; i++) {
+                var c = config.conditionalmenu[i];
+                result = yield* wechat_api.addConditionalMenu(c);
+                console.log(result);
+            }
+        }
+        
+        this.body = api.success();
+    } catch (e) {
+        console.log(e);
+        this.body = api.return(apiError.server_error);
+    }
+});
