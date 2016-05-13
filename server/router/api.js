@@ -73,8 +73,15 @@ router.get('/student/behavior', function *(next) {
 
 
 // manager
+var ___user_list = null;
 const wechat_api = require('../wechat_robot').wechat_api;
 router.get('/manager/user/list', function *(next) {
+
+    if (___user_list) {
+        console.log('return cache');
+       return  this.body = api.returnList(___user_list);
+    }
+
     const result = yield wechat_api.getFollowers();
     const openid_list = result.data.openid;
     const total = result.total;
@@ -95,6 +102,7 @@ router.get('/manager/user/list', function *(next) {
     }
 
     console.log(user_list);
+    ___user_list = user_list;
     this.body = api.returnList(user_list);
 });
 
