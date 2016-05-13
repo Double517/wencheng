@@ -117,14 +117,14 @@ router.post('/manager/group/move', function *(next) {
     const to_groupid = this.request.body.to_groupid;
     console.log({openid_list, to_groupid});
     try {
-        var result = null;
-        for (var i = 0; i < openid_list.length; i++) {
-            var openid = openid_list[i];
-            result = yield wechat_api.moveUserToGroup(openid, to_groupid);
-            console.log(result);
-        }
-        // const result = yield wechat_api.moveUsersToGroup(openid_list, to_groupid);
-        // console.log(result);
+        // var result = null;
+        // for (var i = 0; i < openid_list.length; i++) {
+        //     var openid = openid_list[i];
+        //     result = yield wechat_api.moveUserToGroup(openid, to_groupid);
+        //     console.log(result);
+        // }
+        const result = yield wechat_api.moveUsersToGroup(openid_list, to_groupid);
+        console.log(result);
         this.body = api.success();
     } catch (e) {
         console.log(e);
