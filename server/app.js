@@ -54,7 +54,7 @@ app.use(compress({
 if (config.NODE_ENV === 'development') {
     // proxy for client
     app.use(proxy({
-        host: 'http://localhost:3001', //'http://localhost:8080'
+        host: 'http://localhost:8080', //'http://localhost:3001'
         match: /^(?!\/(api|wechat))/
     }));
 } else {
