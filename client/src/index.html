@@ -10,7 +10,7 @@
 <script type="text/javascript">
     // 跨域就不行了 测试用
     function error(msg,url,line){
-        var REPORT_URL = "api/wechat/reportJsError"; // 收集上报数据的信息
+        var REPORT_URL = "api/log/reportJsError"; // 收集上报数据的信息
         var m =[msg, url, line, navigator.userAgent, +new Date];// 收集错误信息，发生错误的脚本文件网络地址，用户代理信息，时间
         var url = REPORT_URL +'?info='+ JSON.stringify(m);
         var img = new Image;
