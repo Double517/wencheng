@@ -18,7 +18,7 @@ import { ButtonArea,
 
 const wx = require('weixin-js-sdk');
 import Ajax from '../../util/ajax';
-
+import auth from '../../util/auth.js';
 import Page from '../../component/page';
 
 export default class Bind extends React.Component {
@@ -64,7 +64,7 @@ export default class Bind extends React.Component {
     // 拿到微信接口权限
     loadWXConfig() {
         var url = location.protocol + '//' + location.host + location.pathname;
-        Ajax.post('/api/getJsConfig', {url:url})
+        Ajax.post('/api/wechat/getJsConfig', {url:url})
             .then((data) => {
                 wx.config(data);
             })
@@ -100,9 +100,10 @@ export default class Bind extends React.Component {
             password: this.state.password,
         };
         console.log(data);
-        Ajax.post('/api/bind', data)
+        Ajax.post('/api/wechat/bind', data)
             .then((data) => {
                 this.page.showSuccess('绑定成功');
+                auth.didLogin(data);
                 wx.closeWindow();
             })
             .catch((err) => {
