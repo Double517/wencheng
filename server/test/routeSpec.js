@@ -12,14 +12,14 @@ describe('Routes', () => {
         .expect(200, done);
     });
   });
-  describe('GET /messages', () => {
-    it('should return 200', done => {
-      request
-        .get('/messages')
-        .expect('Content-Type', /json/)
-        .expect(200, done);
-    });
-  });
+  // describe('GET /messages', () => {
+  //   it('should return 200', done => {
+  //     request
+  //       .get('/log/messages')
+  //       .expect('Content-Type', /json/)
+  //       .expect(200, done);
+  //   });
+  // });
   // describe('GET /messages/notfound', () => {
   //   it('should return 404', done => {
   //     request

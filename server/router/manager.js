@@ -17,7 +17,7 @@ module.exports = router;
 // manager
 //
 const wechat_api = require('../wechat_robot').wechat_api;
-router.get('/manager/user/list', function *(next) {
+router.get('/user/list', function *(next) {
     const result = yield wechat_api.getFollowers();
     const openid_list = result.data.openid;
     const total = result.total;
@@ -41,13 +41,13 @@ router.get('/manager/user/list', function *(next) {
     this.body = api.returnList(user_list);
 });
 
-router.get('/manager/group/list', function *(next) {
+router.get('/group/list', function *(next) {
     const result = yield wechat_api.getGroups();
     console.log(result);
     this.body = api.returnList(result.groups);
 });
 
-router.post('/manager/group/move', function *(next) {
+router.post('/group/move', function *(next) {
     const openid_list = this.request.body.openid_list;
     const to_groupid = this.request.body.to_groupid;
     console.log({openid_list, to_groupid});
@@ -67,7 +67,7 @@ router.post('/manager/group/move', function *(next) {
     }
 });
 
-router.post('/manager/group/add', function *(next) {
+router.post('/group/add', function *(next) {
     const group_name = this.request.body.group_name;
     console.log({group_name});
     try {
@@ -79,7 +79,7 @@ router.post('/manager/group/add', function *(next) {
     }
 });
 
-router.post('/manager/group/remove', function *(next) {
+router.post('/group/remove', function *(next) {
     const group_id = this.request.body.group_id;
     console.log({group_id});
     try {
@@ -91,14 +91,14 @@ router.post('/manager/group/remove', function *(next) {
     }
 });
 
-router.get('/manager/menu/all', function *(next) {
+router.get('/menu/all', function *(next) {
     const result = yield wechat_api.getMenu();
     console.log(result);
     //{menu:{}, conditionalmenu:[{},{}]}
     this.body = api.return(result);
 });
 
-router.post('/manager/menu/update', function *(next) {
+router.post('/menu/update', function *(next) {
     const config = this.request.body.config;
     console.log(config);
     var result = null;
