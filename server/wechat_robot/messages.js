@@ -15,6 +15,7 @@ const eventKeys = module.exports.eventKeys = {
 
 const pageUrls = module.exports.pageUrls = {
     bind: '#/bind',
+    unbind: '#/unbind',
     class_schedule: '#/class_schedule',
     score: '#/score',
     cet: '#/cet',
@@ -25,8 +26,9 @@ const pageUrls = module.exports.pageUrls = {
 
 const redirectUrlToPage =
 module.exports.redirectUrlToPage = function (page) {
-    const redirctUrl = encodeURIComponent(sprintf('http://%s/%s', config.HOST_DOMAIN, page));
-    const url = sprintf('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect', config_keys.WECHAT_APPID, redirctUrl);
+    //const redirctUrl = encodeURIComponent(sprintf('http://%s/%s', config.HOST_DOMAIN, page));
+    //const url = sprintf('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect', config_keys.WECHAT_APPID, redirctUrl);
+    const url = sprintf('http://%s/%s', config.HOST_DOMAIN, page);
     return url;
 };
 

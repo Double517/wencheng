@@ -13,6 +13,9 @@ const SQLite3Store = require('koa-sqlite3-session');
 const bodyParser = require('koa-bodyparser');
 const assert = require('chai').assert;
 const proxy = require('koa-proxy');
+String.prototype.hasPrefix = function (prefix) {
+    return this.lastIndexOf(prefix, 0) === 0;
+};
 
 // config
 const keys = require('./config/keys');
@@ -20,7 +23,7 @@ const config = require('./config/config.js');
 
 // 1st
 const constants = require('./constants');
-const apiRouter = require('./router/api');
+const apiRouters = require('./router/routers');
 const apiError = require('./api/error');
 const api = require('./api');
 
@@ -87,42 +90,18 @@ if (config.NODE_ENV === 'development') {
 
 // wechat
 app.use(function *(next) {
-    if (this.path.indexOf('/wechat/') !== -1) {
+    if (this.path.hasPrefix('/wechat/')) {
         yield wechat(keys.WECHAT_TOKEN).middleware(wechat_robot);
     } else {
         yield *next;
     }
 });
-
-// 注入openid 和 userid
-app.use(wechat_web_auth);
-
-app.use(function *(next) {
-    // TODO: for test
-    if (this.query.userid) {
-        this.userid = this.query.userid;
-    }
-
-    // 临时放在这, 之后把绑定, 登录的放在router之前
-    if (this.path === '/#/bind' ||
-        this.path === '/api/bind' ||
-        this.path === '/api/getJsConfig' ||
-        this.path === '/api/reportTypeError' ||
-        this.path.indexOf('/api/manager') !== -1) {// TODO: 卧槽这个接口不要授权?
-        return yield *next;
-    }
-
-    if (!this.userid) {
-        this.body = api.return(apiError.unauthorized);
-        return;
-    }
-
-    return yield *next;
+//
+// routers
+apiRouters.forEach(function (router) {
+    app.use(router.routes());
+    app.use(router.allowedMethods());
 });
-
-// router
-app.use(apiRouter.routes());
-app.use(apiRouter.allowedMethods());
 
 // error handler
 app.on('error', function(err, ctx){

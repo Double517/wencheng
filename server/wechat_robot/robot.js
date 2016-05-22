@@ -89,7 +89,9 @@ Robot.prototype.handleMessage = function *(message)
                 
                 case 'CLICK':
                     return yield this.handleClickEvent(message);
-
+                case 'VIEW':
+                    // 用户点击自定义菜单
+                    return;
                 default:
                     return yield this.handleUnsupportedMessage(message);
             }
@@ -115,8 +117,9 @@ Robot.prototype.handleTextMessage = function *(message)
     } else if (/6/.test(content) || /行为/.test(content)) {
         this.reply(messages.openPage('行为学分', pageUrls.behavior));
     } else if (/7/.test(content) || /解绑/.test(content)) {
-        message.EventKey = eventKeys.unbind;
-        yield this.handleClickEvent(message);
+        // message.EventKey = eventKeys.unbind;
+        // yield this.handleClickEvent(message);
+        this.reply(messages.openPage('解绑', pageUrls.unbind));
     } else {
         this.reply(messages.commands());
     }
@@ -143,8 +146,8 @@ Robot.prototype.handleClickEvent = function *(message)
             this.reply(messages.today_class_schedule(schedule));
             return;
 
-        case eventKeys.unbind:
-            return yield this.handleUnbindEvent(message);
+        // case eventKeys.unbind:
+        //     return yield this.handleUnbindEvent(message);
 
         default:
             console.log(eventKey);
@@ -153,24 +156,24 @@ Robot.prototype.handleClickEvent = function *(message)
     }
 };
 
-Robot.prototype.handleUnbindEvent = function *(message)
-{
-    if (this.prevMessage.EventKey !== eventKeys.unbind) {
-        this.reply('请再点一次解绑');
-    } else {
-        const openid = message.FromUserName;
-        const request = yield db.request();
-        request.input('openid', openid);
-        var result = yield request.query('delete from wechat_bind where openid=@openid');
-
-        if (result === undefined) {
-            this.setUserid(null);
-            this.reply('解绑成功');
-        } else {
-            this.reply(messages.serverError());
-        }
-    }
-};
+// Robot.prototype.handleUnbindEvent = function *(message)
+// {
+//     if (this.prevMessage.EventKey !== eventKeys.unbind) {
+//         this.reply('请再点一次解绑');
+//     } else {
+//         const openid = message.FromUserName;
+//         const request = yield db.request();
+//         request.input('openid', openid);
+//         var result = yield request.query('delete from wechat_bind where openid=@openid');
+//
+//         if (result === undefined) {
+//             this.setUserid(null);
+//             this.reply('解绑成功');
+//         } else {
+//             this.reply(messages.serverError());
+//         }
+//     }
+// };
 
 Robot.prototype.handleUnsupportedMessage = function *(message) {
     this.reply(messages.unsupported());

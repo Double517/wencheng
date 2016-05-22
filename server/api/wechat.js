@@ -5,12 +5,18 @@ const api = require('../api');
 const assert = require('chai').assert;
 const wechat_api = require('../wechat_robot').wechat_api;
 const messages = require('../wechat_robot/messages');
+const keys = require('../config/keys');
+const _ = require('lodash');
+const http_request = require('../wechat_robot/request');
+const sprintf = require("sprintf-js").sprintf;
+
 
 module.exports.bind = function *()
 {
     const userid = this.request.body.username;
     const password = this.request.body.password;
-    const openid = this.openid;
+   // const openid = this.openid;
+    const openid = this.session.openid;
 
     if (!userid || !password) {
         this.body = api.return(apiError.parameter_invalid);
@@ -77,9 +83,36 @@ module.exports.bind = function *()
         // 回复用户
         yield wechat_api.sendText(openid, messages.bindSuccess());
 
-        this.body = api.success();
+        // session
+        const user = {userid: userid, openid: openid, usertype: userType};
+        this.session.user = user;
+
+        //
+        this.body = api.success(user);
     } else {
         this.body = api.return(apiError.password_error);
+    }
+};
+
+module.exports.unbind = function *()
+{
+    const user = this.session.user;
+    console.log(user);
+    if (!user) {
+        this.body = api.return(apiError.error(-1, '没有绑定'));
+        return;
+    }
+
+    const openid = user.openid;
+    const request = yield db.request();
+    request.input('openid', openid);
+    var result = yield request.query('delete from wechat_bind where openid=@openid');
+
+    if (result === undefined) {
+        this.session = null;
+        this.body = api.success();
+    } else {
+        this.body = api.return(apiError.error(-1, '解绑失败'));
     }
 };
 
@@ -98,4 +131,44 @@ module.exports.getJsConfig = function *()
     console.log(jsconfig);
 
     this.body = api.return(jsconfig);
+};
+
+module.exports.getUser = function *()
+{
+    const code = this.request.body.code;
+    if (!_.isString(code)) {
+        throw Error('code = null');
+    }
+
+    // code 换 openid
+    //
+    var openid = null;
+    const url = sprintf('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code',
+        keys.WECHAT_APPID, keys.WECHAT_APPSECRET, code);
+    try {
+        var body = yield http_request(url);
+        console.log(body);
+        openid = body.openid;
+        assert(_.isObject(body) && _.isString(body.openid));
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
+
+    // openid 换 userid
+    //
+    var userid = null;
+    const request = yield db.request();
+    request.input('openid', openid);
+    const result = yield request.queryOne('select * from wechat_bind where openid=@openid');
+    if (result) {
+        userid = result.userid;
+        this.session.user = result; //{userid, openid, usertype}
+    } else {
+        // 记录openid, 给后面绑定用
+        this.session.openid = openid;
+    }
+
+    console.log('getOpenID code '+ code + ' -> this.openid ' + openid + ' -> userid ' + userid);
+    this.body = api.return({getOpenid: !!openid, user:{userid:userid}});
 };
