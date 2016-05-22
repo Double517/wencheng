@@ -1,6 +1,7 @@
 import React from 'react'
 import Page from '../component/page';
 import wx_helper from '../util/wechat_helper';
+import getQueryParameter from '../util/getQueryParameter';
 
 export default class WechatOAuth extends React.Component {
     componentDidMount() {
@@ -11,12 +12,12 @@ export default class WechatOAuth extends React.Component {
         if (location.state && location.state.nextPathname) {
             target = location.state.nextPathname;
         } else {
-            target = getParameterByName('target');
+            target = getQueryParameter('target');
         }
 
-        console.log(target);
+        console.log({target});
         const url = wx_helper.redirectUrlToPage(`#/redirect?target=${target}`);
-        console.log(url);
+        console.log({url});
         window.location = url;
     }
 
@@ -32,9 +33,3 @@ export default class WechatOAuth extends React.Component {
         return this.refs.page;
     }
 };
-
-
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.href);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}

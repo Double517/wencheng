@@ -11,13 +11,11 @@ function redirectToLogin(nextState, replace) {
         });
 
         // if (wx_helper.isWeixinBrowser()) {
-        //     replace({
-        //         pathname: 'http://baidu.com',
-        //         state: {nextPathname: nextState.location.pathname}
-        //     });
+        // replace({
+        //     pathname: '/wechat_oauth',
+        //     state: {nextPathname: nextState.location.pathname}
+        // });
         // } else {
-        //
-        //
         //     replace({
         //         pathname: '/login',
         //         state: {nextPathname: nextState.location.pathname}
@@ -53,16 +51,18 @@ const publicRoutes = [
         component: require('../pages/WechatRedirect')
     },
     {
+        path: '/wechat_oauth',
+        component: require('../pages/WechatOAuth')
+    },
+    {
+        // 虽是public但是依赖openid, 所以使用 `/wechat_oauth?target=/bind`调用
         path: '/bind',
         component: require('../pages/bind')
     },
     {
+        // 虽是public但是依赖openid, 所以使用 `/wechat_oauth?target=/unbind`调用
         path: '/unbind',
         component: require('../pages/bind/unbind')
-    },
-    {
-        path: '/wechat_oauth',
-        component: require('../pages/WechatOAuth')
     }
 ];
 

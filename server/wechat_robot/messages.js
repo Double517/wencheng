@@ -14,8 +14,8 @@ const eventKeys = module.exports.eventKeys = {
 };
 
 const pageUrls = module.exports.pageUrls = {
-    bind: '#/bind',
-    unbind: '#/unbind',
+    bind: '#/wechat_oauth?target=/bind',
+    unbind: '#/wechat_oauth?target=/unbind',
     class_schedule: '#/class_schedule',
     score: '#/score',
     cet: '#/cet',

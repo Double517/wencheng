@@ -16,12 +16,15 @@ import { ButtonArea,
     Toast,
 } from 'react-weui';
 
+import { withRouter } from 'react-router'
 const wx = require('weixin-js-sdk');
 import Ajax from '../../util/ajax';
 import auth from '../../util/auth.js';
 import Page from '../../component/page';
+import getQueryParameter from '../../util/getQueryParameter';
 
-export default class Bind extends React.Component {
+
+class Bind extends React.Component {
     constructor (props) {
         super(props);
     }
@@ -104,7 +107,13 @@ export default class Bind extends React.Component {
             .then((data) => {
                 this.page.showSuccess('绑定成功');
                 auth.didLogin(data);
-                wx.closeWindow();
+
+                var target = getQueryParameter('target');
+                if (target) {
+                    this.props.router.replace(target);
+                } else {
+                    wx.closeWindow();
+                }
             })
             .catch((err) => {
                 this.page.showAlert(err.msg);
@@ -114,4 +123,7 @@ export default class Bind extends React.Component {
     get page() {
         return this.refs.page;
     }
-};
+}
+
+export default withRouter(Bind);
+

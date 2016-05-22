@@ -18,6 +18,8 @@ module.exports.bind = function *()
    // const openid = this.openid;
     const openid = this.session.openid;
 
+    console.log({userid, password, openid});
+
     if (!userid || !password) {
         this.body = api.return(apiError.parameter_invalid);
         return;
@@ -96,14 +98,19 @@ module.exports.bind = function *()
 
 module.exports.unbind = function *()
 {
-    const user = this.session.user;
-    console.log(user);
-    if (!user) {
+    var openid = null;
+
+    openid = this.session.user && this.session.user.openid;
+    console.log({user:this.session.user});
+
+    openid = openid || this.session.openid;
+    console.log({'this.session.openid':this.session.openid});
+
+    if (!openid) {
         this.body = api.return(apiError.error(-1, '没有绑定'));
         return;
     }
 
-    const openid = user.openid;
     const request = yield db.request();
     request.input('openid', openid);
     var result = yield request.query('delete from wechat_bind where openid=@openid');
