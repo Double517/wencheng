@@ -30,7 +30,6 @@ const api = require('./api');
 // wechat
 const wechat = require('co-wechat');
 const wechat_robot = require('./wechat_robot').robot;
-const wechat_web_auth = require('./wechat_robot/web-auth');
 
 
 require('debug-trace')({
@@ -96,7 +95,7 @@ app.use(function *(next) {
         yield *next;
     }
 });
-//
+
 // routers
 apiRouters.forEach(function (router) {
     app.use(router.routes());
