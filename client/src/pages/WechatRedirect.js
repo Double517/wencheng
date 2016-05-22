@@ -2,8 +2,9 @@ import React from 'react'
 import Ajax from '../util/ajax';
 import Page from '../component/page';
 import auth from '../util/auth.js';
+import { withRouter } from 'react-router'
 
-export default class WechatRedirect extends React.Component {
+class WechatRedirect extends React.Component {
     componentDidMount() {
         var code = getParameterByName('code');
         var target = getParameterByName('target');
@@ -18,9 +19,10 @@ export default class WechatRedirect extends React.Component {
                 
                 if (user.userid) {
                     auth.didLogin(user);
-                    window.location.hash = target;
+                    this.props.router.replace(target);
                 } else {
-                    window.location.hash = '#/bind';
+                    console.log(target);
+                    this.props.router.replace('/bind');
                 }
             })
             .catch((err) => {
@@ -39,7 +41,10 @@ export default class WechatRedirect extends React.Component {
     get page() {
         return this.refs.page;
     }
-};
+}
+
+export default withRouter(WechatRedirect);
+
 
 function getParameterByName(name) {
     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.href);

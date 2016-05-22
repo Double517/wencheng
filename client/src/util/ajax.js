@@ -1,6 +1,7 @@
 
 import $ from 'webpack-zepto';
 const objectAssign = require('object-assign');
+import { hashHistory } from 'react-router'
 
 export default class Ajax {
 
@@ -21,7 +22,12 @@ export default class Ajax {
                         resolve(data.data);
                     } else {
                         console.log(`<--- get:${url}, fail:${JSON.stringify(data, null, 4)}`);
-                        reject({code:data.code, msg: data.msg});
+                        if (data.code === 401) {
+                            var target = window.location.hash.slice(1);
+                            hashHistory.push('/wechat_oauth?target='+target);
+                        } else {
+                            reject({code:data.code, msg: data.msg});
+                        }
                     }
                 },
                 // type: "timeout", "error", "abort", "parsererror"
@@ -50,7 +56,12 @@ export default class Ajax {
                         resolve(data.data);
                     } else {
                         console.log(`<--- post:${url}, fail:${JSON.stringify(data, null, 4)}`);
-                        reject({code:data.code, msg: data.msg});
+                        if (data.code === 401) {
+                            var target = window.location.hash.slice(1);
+                            hashHistory.push('/wechat_oauth?target='+target);
+                        } else {
+                            reject({code:data.code, msg: data.msg});
+                        }
                     }
                 },
                 // type: "timeout", "error", "abort", "parsererror"
@@ -67,17 +78,6 @@ export default class Ajax {
     static commonParams() {
         var params = {};
 
-        // 注入wxcode
-        var code = getParameterByName('code');
-        if (code) {
-            params.code = code;
-        }
-
         return params;
     }
 };
-
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.hash);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
