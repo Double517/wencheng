@@ -1,30 +1,25 @@
 import auth from '../util/auth.js';
+import wx_helper from '../util/wechat_helper';
 
 // 登录就直接转到url
 // 未登录就先登录, 登录有转到url
 function redirectToLogin(nextState, replace) {
     if (!auth.loggedIn()) {
-
-        replace({
-            pathname: '/wechat_oauth',
-            state: {nextPathname: nextState.location.pathname}
-        });
-
-        // if (wx_helper.isWeixinBrowser()) {
-        // replace({
-        //     pathname: '/wechat_oauth',
-        //     state: {nextPathname: nextState.location.pathname}
-        // });
-        // } else {
-        //     replace({
-        //         pathname: '/login',
-        //         state: {nextPathname: nextState.location.pathname}
-        //     })
-        // }
+        if (wx_helper.isWeixinBrowser()) {
+            replace({
+                pathname: '/wechat_oauth',
+                state: {nextPathname: nextState.location.pathname}
+            });
+        } else {
+            replace({
+                pathname: '/login',
+                state: {nextPathname: nextState.location.pathname}
+            })
+        }
     }
 }
 
-// 登录成功跳转到dashboard
+// 已经登录就跳转到dashboard
 function redirectToDashboard(nextState, replace) {
     if (auth.loggedIn()) {
         replace('/')
@@ -40,11 +35,6 @@ const publicRoutes = [
         // for test
         path: '/about',
         component: require('../pages/app/About')
-    },
-    {
-        // for test
-        path: '/user/:id',
-        component: require('../pages/app/User')
     },
     {
         path: '/redirect',
@@ -140,27 +130,21 @@ const teacherRoutes = {
 
 const app = {
     path: '/',
-    component: auth.loggedIn() ?
-        require('../pages/app/Dashboard') :
-        require('../pages/app/Landing'),
+    getComponent: (nextState, cb) => {
+        // 根据loggedin状态动态返回component
+        var component = auth.loggedIn() ?
+            require('../pages/app/Dashboard') :
+            require('../pages/app/Landing');
+        cb(null, component);
+    },
     indexRoute: {
-        component: require('../pages/app/PageOne')
+        component: require('../pages/app/Panel')
     },
     childRoutes: [
         {
             onEnter: redirectToLogin,
             childRoutes: [
-                // Protected nested routes for the dashboard
-                {
-                    path: '/page2',
-                    // getComponent 按需载入component
-                    getComponent: (nextState, cb) => {
-                        require.ensure([], (require) => {
-                            cb(null, require('../pages/app/PageTwo'))
-                        })
-                    }
-                }
-                // ...
+
             ]
         }
     ]

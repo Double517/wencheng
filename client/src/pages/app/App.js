@@ -1,47 +1,55 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { withRouter } from 'react-router'
+
 import auth from '../../util/auth'
 
-const App = React.createClass({
+import {
+    Button,
+    ButtonArea,
+} from 'react-weui';
 
-  getInitialState() {
-    return {
-      loggedIn: auth.loggedIn()
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {loggedIn: auth.loggedIn()};
     }
-  },
 
-  updateAuth(loggedIn) {
-    this.setState({
-      loggedIn: !!loggedIn
-    })
-  },
+    updateAuth(loggedIn) {
+        this.setState({
+            loggedIn: !!loggedIn
+        })
+    }
 
-  componentWillMount() {
-    auth.onChange = this.updateAuth
-    auth.login()
-  },
+    componentWillMount() {
+        auth.onChange = this.updateAuth.bind(this);
+        auth.login();
+    }
 
-  render() {
-    return (
-      <div>
-        <ul>
-          <li>
-            {this.state.loggedIn ? (
-              <Link to="/logout">Log out</Link>
-            ) : (
-              <Link to="/login">Sign in</Link>
-            )}
-          </li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/">Home</Link> (changes depending on auth status)</li>
-          <li><Link to="/page2">Page Two</Link> (authenticated)</li>
-          <li><Link to="/user/foo">User: Foo</Link> (authenticated)</li>
-        </ul>
-        {this.props.children}
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <ButtonArea direction="horizontal">
+                    <Button type="primary" size="small" onClick={e=>this.jump(e, '/')}>首页</Button>
+                    <Button type="default" size="small" onClick={e=>this.jump(e, '/about')}>关于</Button>
+                    <Button type="default" size="small"
+                            onClick={e=>this.login(e)}>{this.state.loggedIn ? '登出' : '登录'}</Button>
+                </ButtonArea>
+                {this.props.children}
+            </div>
+        )
+    }
 
-})
+    login() {
+        if (this.state.loggedIn) {
+            this.props.router.replace('logout');
+        } else {
+            this.props.router.replace('login');
+        }
+    }
 
-export default App
+    jump(e, page) {
+        this.props.router.replace(page);
+    }
+}
+
+export default withRouter(App);

@@ -1,47 +1,108 @@
-import React from 'react'
+/**
+ * Created by jf on 15/12/10.
+ */
+
+"use strict";
+
+import React from 'react';
+import { ButtonArea,
+    Button,
+    CellHeader,
+    CellBody,
+    Form,
+    FormCell,
+    Input,
+    Label,
+    Toast,
+} from 'react-weui';
+
 import { withRouter } from 'react-router'
-import auth from '../../util/auth.js'
+import Ajax from '../../util/ajax';
+import auth from '../../util/auth.js';
+import Page from '../../component/page';
+import getQueryParameter from '../../util/getQueryParameter';
 
-const Login = React.createClass({
-  getInitialState() {
-    return {
-      error: false
+
+class Login extends React.Component {
+    constructor (props) {
+        super(props);
     }
-  },
+    componentDidMount() {
+        ;
+    }
+    render() {
+        var isInputValid = this.isValidInput;
+        return (
+            <Page ref="page" className="cell" title="登录">
+                <Form>
+                    <FormCell>
+                        <CellHeader>
+                            <Label style={{width:'60px'}}>账号</Label>
+                        </CellHeader>
+                        <CellBody>
+                        <Input onChange={e=>this.onUsernameChange(e)} ref="username" type="text" placeholder="请输入账号"/>
+                    </CellBody>
+                    </FormCell>
+                    <FormCell>
+                        <CellHeader>
+                            <Label style={{width:'60px'}}>密码</Label>
+                        </CellHeader>
+                        <CellBody>
+                            <Input onChange={e=>this.onPasswordChange(e)} ref="password" type="password" placeholder="请输入密码"/>
+                        </CellBody>
+                    </FormCell>
+                </Form>
 
-  handleSubmit(event) {
-    event.preventDefault()
+                <ButtonArea>
+                    <Button type={isInputValid?'primary':'default'}
+                            disabled={!isInputValid}
+                            onClick={e=>this.submit(e)}>
+                        确定
+                    </Button>
+                </ButtonArea>
+            </Page>
+        );
+    }
+    onPasswordChange(event) {
+        this.setState({password: event.target.value});
+    }
+    onUsernameChange(event) {
+        this.setState({username: event.target.value});
+    }
+    get isValidInput() {
+        return this.state
+            && this.state.username
+            && this.state.username.length > 0
+            && this.state.password
+            && this.state.password.length > 0;
+    }
+    submit(event) {
 
-    const email = this.refs.email.value
-    const pass = this.refs.pass.value
+        if (!this.isValidInput) {
+            return;
+        }
+      
+        this.page.showLoading();
+        auth.login(this.state.username, this.state.password, (loggedIn, err) => {
+            if (err) {
+                this.page.showAlert(err.msg);
+                return;
+            }
+            this.page.showSuccess('登录成功');
 
-    auth.login(email, pass, (loggedIn) => {
-      if (!loggedIn)
-        return this.setState({ error: true })
+            var target = getQueryParameter('target');
+            if (target) {
+                this.props.router.replace(target);
+            } else {
+                this.props.router.replace('/');
+            }
+        });
+    }
 
-      const { location } = this.props
+    get page() {
+        return this.refs.page;
+    }
+}
 
-      if (location.state && location.state.nextPathname) {
-        this.props.router.replace(location.state.nextPathname)
-      } else {
-        this.props.router.replace('/')
-      }
-    })
-  },
+export default withRouter(Login);
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label><input ref="email" placeholder="email" defaultValue="joe@example.com" /></label>
-        <label><input ref="pass" placeholder="password" /></label> (hint: password1)<br />
-        <button type="submit">login</button>
-        {this.state.error && (
-          <p>Bad login information</p>
-        )}
-      </form>
-    )
-  }
-
-})
-
-export default withRouter(Login)

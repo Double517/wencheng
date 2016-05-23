@@ -8,7 +8,7 @@ import React from 'react';
 import {Toast, Dialog} from 'react-weui';
 const {Alert, Confirm} = Dialog;
 import $ from 'webpack-zepto';
-
+import {isWeixinBrowser} from '../util/wechat_helper'
 import './page.less';
 
 export default class Page extends React.Component {
@@ -41,9 +41,8 @@ export default class Page extends React.Component {
 
     render() {
         const {title, subTitle, spacing, className, children} = this.props;
-
         return (
-            <section className={`page ${className}`}>
+            <section className={`page ${className} ${!isWeixinBrowser() ? 'topSpace' : ''}`}>
                 <div className={`bd ${spacing ? 'spacing' : ''}`}>
                     {children}
                 </div>

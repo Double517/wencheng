@@ -7,8 +7,8 @@ const Logout = React.createClass({
   },
 
   render() {
-    return <p>You are now logged out</p>
+    return <p>登出成功</p>
   }
-})
+});
 
 export default Logout

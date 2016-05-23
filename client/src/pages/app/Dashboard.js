@@ -3,17 +3,15 @@ import auth from '../../util/auth'
 
 const Dashboard = React.createClass({
   render() {
-    const token = auth.getToken()
-
+    const user = auth.getUser();
     return (
       <div>
-        <h1>Dashboard</h1>
-        <p>You made it!</p>
-        <p>{token}</p>
+        <br />
+        <p>用户信息: {JSON.stringify(user, null, 4)}</p>
         {this.props.children}
       </div>
     )
   }
-})
+});
 
 export default Dashboard
