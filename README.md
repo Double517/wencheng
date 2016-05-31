@@ -17,7 +17,7 @@ webstorm, ngrok, chrome, 微信web调试工具
 ![微信菜单截图](https://raw.github.com/wujichao/wencheng/master/screenshots/wechat.png)
 ####业务页面
 ![业务页截图](https://raw.github.com/wujichao/wencheng/master/screenshots/pages.png)
-####手机浏览器
+####手机浏览器也能使用
 ![手机浏览器截图](https://raw.github.com/wujichao/wencheng/master/screenshots/safari.png)
 
 
