@@ -49,7 +49,7 @@ webstorm, ngrok, chrome, 微信web调试工具
 
 
 ##数据库
-现有系统使用 sqlserver, 我们沿用 sqlserver, 使用 [node-mssql](https://github.com/patriksimek/node-mssql)+[Tedious](https://www.npmjs.com/package/tedious) 连接  
+现有系统使用 sqlserver, 我们沿用 sqlserver, 使用 [node-mssql](https://github.com/patriksimek/node-mssql) + [Tedious](https://www.npmjs.com/package/tedious) 连接  
 同时封装了常用方法, 见`/server/database/index.js`  
 后来才发现有现成的 [co-warpper](https://github.com/patriksimek/co-mssql)
 
@@ -81,6 +81,12 @@ webstorm, ngrok, chrome, 微信web调试工具
 
 ##学习资源推荐
 下面是我学习这些语言框架时, 查找了大量资料, 其中**非常**有帮助的资源.
+
+###前后端分离
+- [Web 研发模式演变 - 玉伯](https://github.com/lifesinger/lifesinger.github.com/issues/184)   
+- [前后端分离的思考与实践系列](http://blog.jobbole.com/65513/)
+- [淘宝前后端分离实践 slide](http://2014.jsconf.cn/slides/herman-taobaoweb/index.html)   
+
 ###Node.js:
 - [官方文档](https://nodejs.org/api/)
 - 深入浅出Node.js - 朴灵
