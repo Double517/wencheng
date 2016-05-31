@@ -1,5 +1,5 @@
-# wencheng
-文成公主 - 一个微信公众号全栈工程 - 我的毕业设计
+# 文成公主
+一个微信公众号全栈工程, 是我的毕业设计
 <p align="center" >
   <img src="https://raw.github.com/wujichao/wencheng/master/screenshots/cat.jpg" alt="cat" title="cat">
 </p>
@@ -9,8 +9,10 @@
 ##技术栈
 nodejs, koa, reactjs, webpack, mocha, 前后端分离
 
+
 ##开发工具
 webstorm, ngrok, chrome, 微信web调试工具
+
 
 ##相关截图
 ####公众号界面
@@ -32,7 +34,8 @@ webstorm, ngrok, chrome, 微信web调试工具
 - 业务模块是`/server/api/*.js`
 - 路由是`/server/router/*.js`
 
-##用户认证流程介绍
+
+##微信用户认证流程介绍
 用户认证和路由都是在前端做的, 参考[react-router/examples/auth-with-shared-root](https://github.com/reactjs/react-router/tree/master/examples/auth-with-shared-root)实现.  
 微信消息的用户认证比较简单, 直接使用 message 里面的 openid 即可.  
 而微信内 web 页用户认证比较复杂, 当用户点进去我们的 web 页, 我们怎么知道是哪一个用户点进去的?
@@ -44,19 +47,22 @@ webstorm, ngrok, chrome, 微信web调试工具
 我们使用标准的做法, 同时我们还期望这些 web 页脱离微信也可以正常登陆使用. 具体流程如下图.  
 ![流程图](https://raw.github.com/wujichao/wencheng/master/screenshots/auth_flow.png)
 
+
 ##数据库
 现有系统使用 sqlserver, 我们沿用 sqlserver, 使用 [node-mssql](https://github.com/patriksimek/node-mssql)+[Tedious](https://www.npmjs.com/package/tedious) 连接  
 同时封装了常用方法, 见`/server/database/index.js`  
 后来才发现有现成的 [co-warpper](https://github.com/patriksimek/co-mssql)
 
+
 ##如何部署
 理论上没有具体的业务数据库没法正常使用...   
 写一下理论上的使用方法吧  
-修改 `server/config/config.js`  
+修改 `server/config/config.js`   
 修改 `server/config/key.js`  
 运行 ngrok `./ngrok -config ngrok.cfg -subdomain wencheng 3000`  
 运行 server `nodeman /server/app.js`  
 运行 client `cd client; npm start`  
+
 
 ##微信开发相关
 ###三方库
@@ -74,6 +80,7 @@ webstorm, ngrok, chrome, 微信web调试工具
 - [微信web开发者工具](https://mp.weixin.qq.com/wiki/10/e5f772f4521da17fa0d7304f68b97d7e.html)
 
 ##学习资源推荐
+下面是我学习这些语言框架时, 查找了大量资料, 其中**非常**有帮助的资源.
 ###Node.js:
 - [官方文档](https://nodejs.org/api/)
 - 深入浅出Node.js - 朴灵
