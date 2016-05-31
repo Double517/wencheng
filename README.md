@@ -13,11 +13,11 @@ nodejs, koa, reactjs, webpack, mocha, 前后端分离
 webstorm, ngrok, chrome, 微信web调试工具
 
 ##相关截图
-- ####公众号界面
+####公众号界面
 ![微信菜单截图](https://raw.github.com/wujichao/wencheng/master/screenshots/wechat.png)
-- ####业务页面
+####业务页面
 ![业务页截图](https://raw.github.com/wujichao/wencheng/master/screenshots/pages.png)
-- ####手机浏览器
+####手机浏览器
 ![手机浏览器截图](https://raw.github.com/wujichao/wencheng/master/screenshots/safari.png)
 
 
@@ -41,8 +41,8 @@ webstorm, ngrok, chrome, 微信web调试工具
 
 - 标准的做法是利用微信的 OAuth 流程, 先跳转到微信的 OAuth 页, 然后带着一个 code 参数跳转回来, 然后用这个 code 参数值去拿 openid, [文档](http://mp.weixin.qq.com/wiki/4/9ac2e7b1f1d22e9e57260f6553822520.html), 然后用 openid 去用户绑定表拿到 user 信息, 最后存在 session 里. 
 
-我们使用标准的做法, 同时我们还期望这些 web 页脱离微信也可以正常登陆使用. 具体流程如下图.
-![流程图](https://raw.github.com/wujichao/wencheng/master/auth_flow.png)
+我们使用标准的做法, 同时我们还期望这些 web 页脱离微信也可以正常登陆使用. 具体流程如下图.  
+![流程图](https://raw.github.com/wujichao/wencheng/master/screenshots/auth_flow.png)
 
 ##数据库
 现有系统使用 sqlserver, 我们沿用 sqlserver, 使用 [node-mssql](https://github.com/patriksimek/node-mssql)+[Tedious](https://www.npmjs.com/package/tedious) 连接  
