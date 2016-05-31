@@ -24,6 +24,7 @@ export default class Ajax {
                         console.log(`<--- get:${url}, fail:${JSON.stringify(data, null, 4)}`);
                         if (data.code === 401) {
                             var target = window.location.hash.slice(1);
+                            // TODO: 清除登录信息, 重走登录流程, 区分微信or手机浏览器
                             hashHistory.push('/wechat_oauth?target='+target);
                         } else {
                             reject({code:data.code, msg: data.msg});
@@ -58,6 +59,7 @@ export default class Ajax {
                         console.log(`<--- post:${url}, fail:${JSON.stringify(data, null, 4)}`);
                         if (data.code === 401) {
                             var target = window.location.hash.slice(1);
+                            // TODO: 清除登录信息, 重走登录流程, 区分微信or手机浏览器
                             hashHistory.push('/wechat_oauth?target='+target);
                         } else {
                             reject({code:data.code, msg: data.msg});
