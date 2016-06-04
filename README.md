@@ -60,8 +60,8 @@ webstorm, ngrok, chrome, 微信web调试工具
 修改 `server/config/config.js`   
 修改 `server/config/key.js`  
 运行 ngrok `./ngrok -config ngrok.cfg -subdomain wencheng 3000`  
-运行 server `nodeman /server/app.js`  
-运行 client `cd client; npm start`  
+运行 server `cd server; npm install; nodeman app.js`  
+运行 client `cd client; npm install; npm start`  
 
 
 ##微信开发相关
