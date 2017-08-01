@@ -6,24 +6,24 @@
 >文成公主是苏大东校区的一只猫
 
 
-##技术栈
+## 技术栈
 nodejs, koa, reactjs, webpack, mocha, 前后端分离
 
 
-##开发工具
+## 开发工具
 webstorm, ngrok, chrome, 微信web调试工具
 
 
-##相关截图
-####公众号界面
+## 相关截图
+#### 公众号界面
 ![微信菜单截图](https://raw.github.com/wujichao/wencheng/master/screenshots/wechat.png)
-####业务页面
+#### 业务页面
 ![业务页截图](https://raw.github.com/wujichao/wencheng/master/screenshots/pages.png)
-####脱离微信在浏览器中使用
+#### 脱离微信在浏览器中使用
 ![手机浏览器截图](https://raw.github.com/wujichao/wencheng/master/screenshots/safari.png)
 
 
-##架构介绍
+## 架构介绍
 ![架构图](https://raw.github.com/wujichao/wencheng/master/screenshots/modules.png)
 
 微信的公众号的交互形式有两种，一种是普通的消息会话，还有一种是公众号内网页.  
@@ -35,7 +35,7 @@ webstorm, ngrok, chrome, 微信web调试工具
 - 路由是`/server/router/*.js`
 
 
-##微信用户认证流程介绍
+## 微信用户认证流程介绍
 用户认证和路由都是在前端做的, 参考[react-router/examples/auth-with-shared-root](https://github.com/reactjs/react-router/tree/master/examples/auth-with-shared-root)实现.  
 微信消息的用户认证比较简单, 直接使用 message 里面的 openid 即可.  
 而微信内 web 页用户认证比较复杂, 当用户点进去我们的 web 页, 我们怎么知道是哪一个用户点进去的?
@@ -48,13 +48,13 @@ webstorm, ngrok, chrome, 微信web调试工具
 ![流程图](https://raw.github.com/wujichao/wencheng/master/screenshots/auth_flow.png)
 
 
-##数据库
+## 数据库
 现有系统使用 sqlserver, 我们沿用 sqlserver, 使用 [node-mssql](https://github.com/patriksimek/node-mssql) + [Tedious](https://www.npmjs.com/package/tedious) 连接  
 同时封装了常用方法, 见`/server/database/index.js`  
 后来才发现有现成的 [co-warpper](https://github.com/patriksimek/co-mssql)
 
 
-##如何部署
+## 如何部署
 理论上没有具体的业务数据库没法正常使用...   
 写一下理论上的使用方法吧  
 修改 `server/config/config.js`   
@@ -64,45 +64,45 @@ webstorm, ngrok, chrome, 微信web调试工具
 运行 client `cd client; npm install; npm start`  
 
 
-##微信开发相关
-###三方库
+## 微信开发相关
+### 三方库
 - [co-wechat](https://github.com/node-webot/co-wechat)
 - [co-wechat-api](https://github.com/node-webot/co-wechat-api)
 - [co-wechat-oauth](https://github.com/node-webot/co-wechat-oauth)
 
-###Ngrok
+### Ngrok
 [ngrok](https://ngrok.com) 是反向代理, 是微信服务器与本地开发环境的桥梁
 
-###资源
+### 资源
 - [微信开发文档](http://mp.weixin.qq.com/wiki/home/index.html)
 - [微信开发测试账号](http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login)
 - [微信公众平台接口调试工具](http://mp.weixin.qq.com/debug/)
 - [微信web开发者工具](https://mp.weixin.qq.com/wiki/10/e5f772f4521da17fa0d7304f68b97d7e.html)
 
-##学习资源推荐
+## 学习资源推荐
 下面是我学习这些语言框架时, 查找了大量资料, 其中**非常**有帮助的资源.
 
-###前后端分离
+### 前后端分离
 - [Web 研发模式演变 - 玉伯](https://github.com/lifesinger/lifesinger.github.com/issues/184)   
 - [前后端分离的思考与实践系列](http://blog.jobbole.com/65513/)
 - [淘宝前后端分离实践 slide](http://2014.jsconf.cn/slides/herman-taobaoweb/index.html)   
 
-###Node.js:
+### Node.js:
 - [官方文档](https://nodejs.org/api/)
 - 深入浅出Node.js - 朴灵
 
-###Koa:
+### Koa:
 - [官方文档](https://github.com/koajs/koa)
 - [Generator, Co and Koa - deadhorse](http://deadhorse.me/co-and-koa-talk/)
 - [Koa 框架 - 阮一峰](http://javascript.ruanyifeng.com/nodejs/koa.html)
 
-###ES6
+### ES6
 
 - [es6-features](http://es6-features.org/)
 - [ECMAScript 6入门](http://es6.ruanyifeng.com/)
 - [React/React Native 的ES5 ES6写法对照表](http://bbs.reactnative.cn/topic/15/react-react-native-%E7%9A%84es5-es6%E5%86%99%E6%B3%95%E5%AF%B9%E7%85%A7%E8%A1%A8/2)
 
-###React
+### React
 - [官方文档](https://facebook.github.io/react/docs/getting-started.html)
 - [react-patterns](https://github.com/planningcenter/react-patterns)
 - [react-howto](https://github.com/petehunt/react-howto)
